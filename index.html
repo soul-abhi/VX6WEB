@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VX6 — Direct IPv6 Routing Protocol</title>
+  <meta name="description" content="VX6 is a direct IPv6 peer-to-peer routing protocol. This page provides an overview, comparison with Tor, and key technical properties." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <div class="wrapper">
+      <div class="site-header-top">
+        <a href="index.html" class="site-logo">VX6</a>
+        <div class="header-actions">
+          <a href="https://github.com/yourusername/vx6" class="header-github" target="_blank" rel="noopener noreferrer" id="nav-github">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
+          <a href="#contact" class="btn-collab" id="nav-cta">Collaborate</a>
+        </div>
+      </div>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html" id="nav-home">Home</a>
+        <a href="how-to-use.html" id="nav-use">How to Use</a>
+        <a href="technical.html" id="nav-tech">Technical Overview</a>
+        <a href="future.html" id="nav-future">Future Prospectus</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="page-content">
+    <div class="wrapper clearfix">
+
+      <div class="article-meta">
+        <strong>VX6</strong> — Direct IPv6 Routing &nbsp;·&nbsp; Open Protocol &nbsp;·&nbsp; v1.0.0 &nbsp;·&nbsp;
+        <a href="how-to-use.html">Setup Guide</a> &nbsp;·&nbsp;
+        <a href="technical.html">Technical Reference</a>
+      </div>
+
+      <!-- INFOBOX -->
+      <aside class="infobox" aria-label="Quick facts">
+        <div class="infobox-title">VX6</div>
+        <table>
+          <tr><td>Type</td><td>Routing Protocol</td></tr>
+          <tr><td>Transport</td><td>IPv6 (native)</td></tr>
+          <tr><td>Handshake</td><td><a href="technical.html#handshake">Noise_XX</a></td></tr>
+          <tr><td>Cipher</td><td>ChaCha20-Poly1305</td></tr>
+          <tr><td>Keys</td><td>Ed25519</td></tr>
+          <tr><td>Default port</td><td>9600 TCP/UDP</td></tr>
+          <tr><td>Address prefix</td><td><code>fd47:06b8::/32</code></td></tr>
+          <tr><td>Status</td><td>Phase 1 complete</td></tr>
+          <tr><td>Licence</td><td>Open specification</td></tr>
+        </table>
+      </aside>
+
+      <h1 id="top">VX6 — Direct IPv6 Routing Protocol</h1>
+
+      <p class="article-intro"><strong>VX6</strong> is a direct peer-to-peer routing protocol built on IPv6. It provides authenticated, encrypted connections between two nodes without any relay infrastructure. VX6 was designed as a successor to <a href="https://www.torproject.org" target="_blank" rel="noopener">Tor</a>, eliminating the latency, exit node risk, and bandwidth constraints that are structurally inherent to onion routing.</p>
+
+      <!-- TOC -->
+      <nav class="toc" aria-label="Table of contents">
+        <div class="toc-title">Contents</div>
+        <ol>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#key-metrics">Key Metrics</a></li>
+          <li><a href="#how-it-works">How It Works</a>
+            <ol>
+              <li><a href="#identity">Identity Derivation</a></li>
+              <li><a href="#handshake">Authentication</a></li>
+              <li><a href="#forwarding">Packet Forwarding</a></li>
+            </ol>
+          </li>
+          <li><a href="#comparison">Comparison with Tor</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#contact">Collaborate</a></li>
+        </ol>
+      </nav>
+
+      <!-- OVERVIEW -->
+      <h2 id="overview">Overview <a href="#overview" class="anchor-link">#</a></h2>
+
+      <p>Tor was built in 2002 as an overlay network on IPv4. It achieves anonymity by routing traffic through a sequence of volunteer-operated relay nodes, encrypting each layer separately. This design carries three structural limitations that no configuration change can resolve:</p>
+
+      <ul>
+        <li><strong>Latency.</strong> Routing through three or more geographically distributed relay nodes introduces 300–800 ms of round-trip latency. This is a consequence of network physics and relay queuing, not a software deficiency.</li>
+        <li><strong>Exit node exposure.</strong> The final relay node (the exit node) decrypts the outermost layer and forwards traffic to the destination. The operator of that node can observe and alter unencrypted traffic.</li>
+        <li><strong>Bandwidth contention.</strong> All Tor circuits compete for relay capacity donated by volunteer operators. Throughput is unpredictable and typically poor for large transfers.</li>
+      </ul>
+
+      <p>VX6 addresses all three at the addressing layer. IPv6's 128-bit address space (3.4 × 10³⁸ addresses) is large enough that each address can be permanently bound to a cryptographic identity — specifically, to an Ed25519 public key. When an address is derived from a public key, the holder of the private key can prove ownership of that address to any other party without involving a third party. Relay infrastructure becomes unnecessary.</p>
+
+      <!-- KEY METRICS -->
+      <h2 id="key-metrics">Key Metrics <a href="#key-metrics" class="anchor-link">#</a></h2>
+
+      <div class="stats-bar" role="region" aria-label="Performance comparison">
+        <table>
+          <tr>
+            <td><span class="stat-val">1–5 ms</span><span class="stat-desc">VX6 latency</span></td>
+            <td><span class="stat-val">300–800 ms</span><span class="stat-desc">Tor latency</span></td>
+            <td><span class="stat-val">0</span><span class="stat-desc">Relay nodes required</span></td>
+            <td><span class="stat-val">3.4×10³⁸</span><span class="stat-desc">IPv6 address space</span></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- HOW IT WORKS -->
+      <h2 id="how-it-works">How It Works <a href="#how-it-works" class="anchor-link">#</a></h2>
+
+      <p>VX6 operates in three layers: identity derivation, mutual authentication, and packet forwarding.</p>
+
+      <h3 id="identity">1.1 — Identity Derivation <a href="#identity" class="anchor-link">#</a></h3>
+
+      <p>Each VX6 node generates an Ed25519 keypair. The IPv6 address of that node is computed as the first 16 bytes of SHA3-256 applied to the raw public key bytes, prefixed with the VX6 ULA range <code>fd47:06b8::/32</code>. Because this derivation is deterministic and public, any peer can verify address ownership by checking a signature against the key embedded in the address — no authority, registry, or certificate chain required.</p>
+
+      <h3 id="handshake">1.2 — Mutual Authentication <a href="#handshake" class="anchor-link">#</a></h3>
+
+      <p>Connections use the <strong>Noise_XX handshake</strong> from the <a href="https://noiseprotocol.org" target="_blank" rel="noopener">Noise Protocol Framework</a>. Noise_XX provides mutual authentication (both parties prove identity) with forward secrecy. It requires no certificate authority and no revocation infrastructure. After three message exchanges, both parties hold a shared symmetric key and all subsequent traffic is protected by <strong>ChaCha20-Poly1305</strong> (AEAD).</p>
+
+      <h3 id="forwarding">1.3 — Packet Forwarding <a href="#forwarding" class="anchor-link">#</a></h3>
+
+      <p>Once a tunnel is established, VX6 runs a lightweight packet forwarder. IPv6 packets addressed to a peer's VX6 address are encrypted and sent directly. Legacy IPv4 applications are supported via a NAT64 translation layer that maps IPv4 addresses into the VX6 address space, allowing existing software to use VX6 without modification.</p>
+
+      <!-- COMPARISON -->
+      <h2 id="comparison">Comparison with Tor <a href="#comparison" class="anchor-link">#</a></h2>
+
+      <table class="wikitable" aria-label="VX6 vs Tor comparison">
+        <thead>
+          <tr>
+            <th scope="col">Property</th>
+            <th scope="col">VX6</th>
+            <th scope="col">Tor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Latency</td>
+            <td>1–5 ms (direct connection)</td>
+            <td>300–800 ms (3+ relay hops)</td>
+          </tr>
+          <tr>
+            <td>Routing model</td>
+            <td>Direct peer-to-peer</td>
+            <td>Guard node → middle relay → exit node</td>
+          </tr>
+          <tr>
+            <td>Identity model</td>
+            <td>Self-sovereign — Ed25519 public key encoded in IPv6 address</td>
+            <td>None — relay nodes do not authenticate peers</td>
+          </tr>
+          <tr>
+            <td>Trust anchor</td>
+            <td>Your own private key</td>
+            <td>Volunteer relay operators</td>
+          </tr>
+          <tr>
+            <td>Exit node risk</td>
+            <td>None — no exit nodes exist in the architecture</td>
+            <td>High — exit node operators can inspect unencrypted traffic</td>
+          </tr>
+          <tr>
+            <td>Relay dependency</td>
+            <td>Zero</td>
+            <td>Total — the network cannot function without relay operators</td>
+          </tr>
+          <tr>
+            <td>Bandwidth</td>
+            <td>Wire speed — dedicated channel, no relay throttling</td>
+            <td>Limited by volunteer relay capacity; unpredictable</td>
+          </tr>
+          <tr>
+            <td>Address space</td>
+            <td>3.4 × 10³⁸ (IPv6)</td>
+            <td>~4.3 × 10⁹ (IPv4 — effectively exhausted in 2011)</td>
+          </tr>
+          <tr>
+            <td>Legacy IPv4 apps</td>
+            <td>Supported via NAT64 translation layer</td>
+            <td>Supported via SOCKS5 proxy</td>
+          </tr>
+          <tr>
+            <td>Certificate authority</td>
+            <td>Not required</td>
+            <td>Not required (onion routing is self-contained)</td>
+          </tr>
+          <tr>
+            <td>Forward secrecy</td>
+            <td>Yes — Noise_XX session keys</td>
+            <td>Yes — per-circuit ephemeral keys</td>
+          </tr>
+          <tr>
+            <td>Open specification</td>
+            <td>Yes</td>
+            <td>Yes — <a href="https://torproject.org" target="_blank" rel="noopener">torproject.org</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- FEATURES -->
+      <h2 id="features">Features <a href="#features" class="anchor-link">#</a></h2>
+
+      <table class="feature-table" aria-label="VX6 feature list">
+        <tr>
+          <td>Direct P2P connection</td>
+          <td>Connections go directly from source to destination with no intermediate nodes. There are no guard nodes, middle relays, or exit nodes.</td>
+        </tr>
+        <tr>
+          <td>Cryptographic identity</td>
+          <td>Every node's address is derived from its public key. Identity is provable by signature; it cannot be forged without the private key.</td>
+        </tr>
+        <tr>
+          <td>NAT64 bridge</td>
+          <td>IPv4 traffic from legacy applications is transparently translated to IPv6 and routed through the VX6 tunnel without application modification.</td>
+        </tr>
+        <tr>
+          <td>SOCKS5 proxy</td>
+          <td>Applications that support SOCKS5 can route traffic through VX6 by pointing at <code>127.0.0.1:1080</code>.</td>
+        </tr>
+        <tr>
+          <td>No bootstrap server</td>
+          <td>Peers are dialled by IPv6 address or Node ID. No central directory or bootstrap server is consulted at any point during Phase 1 operation.</td>
+        </tr>
+        <tr>
+          <td>Open protocol</td>
+          <td>The full protocol specification is freely available. Any party may implement, fork, or audit VX6 without a commercial licence.</td>
+        </tr>
+      </table>
+
+      <!-- CONTACT -->
+      <h2 id="contact">Collaborate <a href="#contact" class="anchor-link">#</a></h2>
+
+      <p>VX6 is a solo research project. Contributors are sought in the areas of protocol design, security analysis, mobile implementation, and embedded systems. Use the form below or the listed channels to get in touch.</p>
+
+      <div class="contact-layout">
+        <div>
+          <h3>Contact</h3>
+          <dl class="contact-channels">
+            <dt>GitHub</dt>
+            <dd>Source code, issue tracker, and pull requests are hosted at <a href="https://github.com/yourusername/vx6" target="_blank" rel="noopener">github.com/yourusername/vx6</a>.</dd>
+            <dt>Email</dt>
+            <dd>For research collaboration and technical discussion. <em>(Update with your actual address.)</em></dd>
+            <dt>Chat</dt>
+            <dd>Real-time discussion planned for Phase 2. Check the GitHub repository for current channels.</dd>
+          </dl>
+        </div>
+
+        <div>
+          <h3>Send a message</h3>
+          <form id="contact-form" novalidate>
+            <div class="form-field">
+              <label class="form-label" for="f-name">Name</label>
+              <input class="form-input" id="f-name" type="text" placeholder="Your name" required />
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="f-email">Email</label>
+              <input class="form-input" id="f-email" type="email" placeholder="you@example.com" required />
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="f-area">Area of interest</label>
+              <input class="form-input" id="f-area" type="text" placeholder="e.g. security research, protocol design, mobile" />
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="f-msg">Message</label>
+              <textarea class="form-textarea" id="f-msg" placeholder="What would you like to work on or contribute?" required></textarea>
+            </div>
+            <button type="submit" class="btn-submit form-submit" id="f-submit">Send Message</button>
+          </form>
+        </div>
+      </div>
+
+    </div><!-- .wrapper -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="wrapper">
+      <div class="footer-inner">
+        <span>© 2026 VX6 Project. Open Protocol. Content available for free use.</span>
+        <ul class="footer-links" role="list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="how-to-use.html">How to Use</a></li>
+          <li><a href="technical.html">Technical</a></li>
+          <li><a href="future.html">Future</a></li>
+          <li><a href="https://github.com/yourusername/vx6" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

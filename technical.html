@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VX6 Technical Overview — Protocol Architecture</title>
+  <meta name="description" content="Technical reference for the VX6 protocol: IPv6 identity derivation, Noise_XX handshake, NAT64 forwarding, and full protocol specifications." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrapper">
+      <div class="site-header-top">
+        <a href="index.html" class="site-logo">VX6</a>
+        <div class="header-actions">
+          <a href="https://github.com/yourusername/vx6" class="header-github" target="_blank" rel="noopener noreferrer" id="nav-github">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
+          <a href="index.html#contact" class="btn-collab" id="nav-cta">Collaborate</a>
+        </div>
+      </div>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html" id="nav-home">Home</a>
+        <a href="how-to-use.html" id="nav-use">How to Use</a>
+        <a href="technical.html" id="nav-tech">Technical Overview</a>
+        <a href="future.html" id="nav-future">Future Prospectus</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <div class="wrapper clearfix">
+
+      <div class="article-meta">
+        <strong>Technical Overview</strong> &nbsp;·&nbsp; Protocol Reference &nbsp;·&nbsp;
+        <a href="index.html">← Main page</a> &nbsp;·&nbsp;
+        <a href="how-to-use.html">Setup Guide</a>
+      </div>
+
+      <!-- TOC -->
+      <nav class="toc" aria-label="Table of contents">
+        <div class="toc-title">Contents</div>
+        <ol>
+          <li><a href="#background">Background</a>
+            <ol>
+              <li><a href="#tor-latency">The latency problem</a></li>
+              <li><a href="#tor-exit">The exit node problem</a></li>
+              <li><a href="#tor-bw">The bandwidth problem</a></li>
+            </ol>
+          </li>
+          <li><a href="#design">Design</a></li>
+          <li><a href="#identity">Layer 1 — Identity derivation</a>
+            <ol>
+              <li><a href="#keypair">Keypair generation</a></li>
+              <li><a href="#derivation">Address derivation</a></li>
+              <li><a href="#verification">Ownership verification</a></li>
+            </ol>
+          </li>
+          <li><a href="#handshake">Layer 2 — Authentication</a>
+            <ol>
+              <li><a href="#noise">Noise_XX handshake</a></li>
+              <li><a href="#message-flow">Message flow</a></li>
+            </ol>
+          </li>
+          <li><a href="#forwarding">Layer 3 — Forwarding</a>
+            <ol>
+              <li><a href="#nat64">NAT64 translation</a></li>
+              <li><a href="#packet-flow">Packet flow</a></li>
+            </ol>
+          </li>
+          <li><a href="#specs">Protocol specifications</a></li>
+          <li><a href="#security">Security properties</a></li>
+        </ol>
+      </nav>
+
+      <h1 id="top">VX6 Technical Overview</h1>
+
+      <p>This page is the technical reference for the VX6 protocol. It describes the three-layer architecture (identity derivation, mutual authentication, and packet forwarding), the rationale behind each design choice, and a complete table of cryptographic primitives and protocol parameters.</p>
+
+      <!-- 1. BACKGROUND -->
+      <h2 id="background">1 — Background <a href="#background" class="anchor-link">#</a></h2>
+
+      <p>Understanding why VX6 was built requires understanding the structural failures of its predecessor.</p>
+
+      <h3 id="tor-latency">1.1 — The latency problem <a href="#tor-latency" class="anchor-link">#</a></h3>
+
+      <p>Tor routes each connection through three geographically distributed relay nodes: a guard node (known to the client), a middle relay (known to neither endpoint), and an exit node (known to the destination server). Each hop adds network propagation delay and relay queuing delay. On a typical internet connection, the resulting round-trip latency is 300–800 ms. This cannot be reduced by optimising the Tor software; it is determined by the physical distance between nodes and the queuing behaviour of relay hardware.</p>
+
+      <h3 id="tor-exit">1.2 — The exit node problem <a href="#tor-exit" class="anchor-link">#</a></h3>
+
+      <p>The exit node is, by design, the node that decrypts the final layer of the onion and forwards traffic to the destination in cleartext (for non-HTTPS connections). Any individual or organisation operating exit nodes can observe the content and metadata of traffic flowing through them. This is not a configuration or software issue; it is an unavoidable consequence of the onion routing model.</p>
+
+      <h3 id="tor-bw">1.3 — The bandwidth problem <a href="#tor-bw" class="anchor-link">#</a></h3>
+
+      <p>Tor relay capacity is provided by volunteers. There is no mechanism to guarantee bandwidth allocation to any particular circuit. As Tor usage has grown, per-circuit bandwidth has decreased. A relay operator can throttle or terminate services at any time. VX6 connections use a dedicated channel between two nodes with no relay contention.</p>
+
+      <!-- 2. DESIGN -->
+      <h2 id="design">2 — Design <a href="#design" class="anchor-link">#</a></h2>
+
+      <p>The foundational observation behind VX6 is that IPv6's 128-bit address space is large enough to permanently assign one address per cryptographic identity, without any risk of exhaustion. An IPv6 address is not merely a routing label — in VX6, it is a commitment to a public key. This allows a connection recipient to verify the identity of a connection initiator by checking a single Diffie-Hellman operation, without consulting any registry or trusted third party.</p>
+
+      <p>The three layers of VX6 build on this observation:</p>
+
+      <ol>
+        <li><strong>Layer 1</strong> defines how IPv6 addresses are derived from Ed25519 public keys.</li>
+        <li><strong>Layer 2</strong> defines how two nodes mutually authenticate using those keys (the Noise_XX handshake).</li>
+        <li><strong>Layer 3</strong> defines how packets are forwarded through the resulting authenticated tunnel, including NAT64 support for legacy IPv4 applications.</li>
+      </ol>
+
+      <!-- 3. IDENTITY -->
+      <h2 id="identity">3 — Layer 1: Identity derivation <a href="#identity" class="anchor-link">#</a></h2>
+
+      <h3 id="keypair">3.1 — Keypair generation <a href="#keypair" class="anchor-link">#</a></h3>
+
+      <p>Each VX6 node generates an <strong>Ed25519</strong> keypair. Ed25519 is a deterministic signature scheme based on Curve25519. It produces 32-byte public keys and 64-byte signatures, and is resistant to timing side-channel attacks in its reference implementation. The private key (<code>identity.ed25519</code>) must be kept secret; the public key is distributed as part of the Node ID string.</p>
+
+      <h3 id="derivation">3.2 — Address derivation <a href="#derivation" class="anchor-link">#</a></h3>
+
+      <p>The VX6 IPv6 address is derived by applying SHA3-256 to the raw 32-byte public key. The first 16 bytes of the resulting hash are used as the host portion of the IPv6 address. The network prefix is the VX6 ULA range <code>fd47:06b8::/32</code>:</p>
+
+      <pre class="code-block"><span class="t-comment">/// Derive a VX6 IPv6 address from an Ed25519 public key</span>
+<span class="t-kw">fn </span><span class="t-cmd">derive_ipv6(pubkey: &amp;Ed25519PublicKey) -&gt; Ipv6Addr</span> {
+    <span class="t-kw">let </span><span class="t-cmd">hash = sha3_256(pubkey.as_bytes());     </span><span class="t-comment">// 32 bytes</span>
+    <span class="t-kw">let </span><span class="t-cmd">host = &amp;hash[..16];                       </span><span class="t-comment">// first 16 bytes</span>
+    <span class="t-cmd">build_ipv6([0xfd, 0x47, 0x06, 0xb8, 0, 0, 0, 0], host)</span>
+    <span class="t-comment">// prefix: fd47:06b8::/32 (VX6 ULA range)</span>
+}</pre>
+
+      <p>Addresses within the range <code>fd47:06b8::</code> to <code>fd47:06b8:ffff:ffff:ffff:ffff:ffff:ffff</code> are VX6-assigned addresses. Routing infrastructure for this range is propagated by VX6 nodes and does not require global BGP advertisement.</p>
+
+      <h3 id="verification">3.3 — Ownership verification <a href="#verification" class="anchor-link">#</a></h3>
+
+      <p>To verify that a peer owns the IPv6 address it claims, a verifier:</p>
+      <ol>
+        <li>Receives the peer's claimed public key (transmitted in the Noise_XX handshake).</li>
+        <li>Recomputes the expected IPv6 address by applying the derivation function above.</li>
+        <li>Confirms that the computed address matches the address being dialled.</li>
+      </ol>
+
+      <p>This check is performed automatically by the VX6 implementation during the handshake. No certificate chain, revocation list, or authority lookup is involved.</p>
+
+      <!-- 4. HANDSHAKE -->
+      <h2 id="handshake">4 — Layer 2: Mutual authentication <a href="#handshake" class="anchor-link">#</a></h2>
+
+      <h3 id="noise">4.1 — Noise_XX handshake <a href="#noise" class="anchor-link">#</a></h3>
+
+      <p>VX6 uses the <strong>Noise_XX</strong> pattern from the <a href="https://noiseprotocol.org/noise.html" target="_blank" rel="noopener">Noise Protocol Framework (revision 34)</a>. Noise_XX was selected because it provides:</p>
+
+      <ul>
+        <li><strong>Mutual authentication</strong> — both the initiator and the responder prove ownership of their static Ed25519 keypairs.</li>
+        <li><strong>Forward secrecy</strong> — ephemeral Diffie-Hellman keys are generated for each session; compromise of the static private key does not expose past session traffic.</li>
+        <li><strong>No trusted third party</strong> — the handshake is entirely self-contained. No certificate authority, no revocation list, no PKI.</li>
+        <li><strong>Identity hiding</strong> — the initiator's static public key is transmitted in the third message, after the channel is encrypted. The initiator's identity is concealed from passive observers.</li>
+      </ul>
+
+      <h3 id="message-flow">4.2 — Message flow <a href="#message-flow" class="anchor-link">#</a></h3>
+
+      <pre class="code-block"><span class="t-comment">Notation: e = ephemeral key, s = static key  
+ee/es/se = DH operations between key types</span>
+
+<span class="t-key">Initiator (Alice)                          Responder (Bob)</span>
+<span class="t-out">─────────────────────────────────────────────────────────────</span>
+<span class="t-cmd">  e                                  →</span>
+                                     <span class="t-out">←</span>      <span class="t-cmd">e, ee, s, es</span>
+<span class="t-cmd">  s, se                              →</span>
+<span class="t-out">─────────────────────────────────────────────────────────────</span>
+<span class="t-success">  Handshake complete.
+  Both parties have derived a shared symmetric key.
+  Subsequent messages are encrypted with ChaCha20-Poly1305.</span></pre>
+
+      <p>After the three-message exchange:</p>
+      <ul>
+        <li>Both parties have performed three Diffie-Hellman operations (<code>ee</code>, <code>es</code>, <code>se</code>), each contributing to the final symmetric key.</li>
+        <li>Both parties have authenticated each other's static public keys.</li>
+        <li>Both parties have verified that the peer's static key corresponds to the dialled IPv6 address (Layer 1 ownership check).</li>
+      </ul>
+
+      <!-- 5. FORWARDING -->
+      <h2 id="forwarding">5 — Layer 3: Packet forwarding <a href="#forwarding" class="anchor-link">#</a></h2>
+
+      <h3 id="nat64">5.1 — NAT64 translation <a href="#nat64" class="anchor-link">#</a></h3>
+
+      <p>Legacy IPv4 applications produce packets with IPv4 source and destination addresses. VX6 translates these into IPv6 addresses within the <code>fd47:06b8::/32</code> prefix by embedding the 32-bit IPv4 address in the lower 32 bits of the IPv6 host portion. This is analogous to the RFC 6052 Well-Known Prefix mechanism, adapted for the VX6 ULA range.</p>
+
+      <p>A corresponding DNS64 component rewrites A-record responses to AAAA records, so that IPv4-only hostnames resolve to VX6-addressable IPv6 addresses. This allows legacy DNS resolution to proceed without modification to the application.</p>
+
+      <h3 id="packet-flow">5.2 — Packet flow <a href="#packet-flow" class="anchor-link">#</a></h3>
+
+      <pre class="code-block"><span class="t-comment">Example: a legacy IPv4 application sends a TCP packet</span>
+
+<span class="t-key">App output:</span>
+  <span class="t-out">SRC  192.168.1.10:5432    (IPv4)</span>
+  <span class="t-out">DST  93.184.216.34:80     (IPv4)</span>
+
+  <span class="t-out">↓  VX6 intercepts via NAT64 interface (vx6nat0)</span>
+  <span class="t-out">↓  Maps IPv4 addresses to VX6 IPv6 space</span>
+
+<span class="t-key">After NAT64:</span>
+  <span class="t-cmd">SRC  fd47:6b8::c0a8:010a:5432   (VX6 IPv6)</span>
+  <span class="t-cmd">DST  fd47:6b8::5db8:d822:0050   (VX6 IPv6)</span>
+
+  <span class="t-out">↓  Encrypted with ChaCha20-Poly1305</span>
+  <span class="t-out">↓  Sent directly to peer — no relay involved</span>
+
+<span class="t-key">At peer:</span>
+  <span class="t-out">↓  Decrypted</span>
+  <span class="t-out">↓  NAT64 reverse-translated to IPv4</span>
+  <span class="t-out">↓  Forwarded to application</span>
+
+<span class="t-success">Total relay nodes traversed: 0</span></pre>
+
+      <!-- 6. SPECS -->
+      <h2 id="specs">6 — Protocol specifications <a href="#specs" class="anchor-link">#</a></h2>
+
+      <table class="wikitable" aria-label="Protocol specifications">
+        <thead>
+          <tr><th>Parameter</th><th>Value</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Transport</td>
+            <td>QUIC (preferred), TCP (fallback)</td>
+            <td>QUIC provides multiplexed streams over UDP with built-in TLS 1.3 session encryption. TCP is selected automatically when UDP is blocked.</td>
+          </tr>
+          <tr>
+            <td>Signature algorithm</td>
+            <td>Ed25519 (RFC 8037)</td>
+            <td>256-bit elliptic curve. 32-byte public key, 64-byte signature. Constant-time implementation required.</td>
+          </tr>
+          <tr>
+            <td>Handshake pattern</td>
+            <td>Noise_XX</td>
+            <td>Noise Protocol Framework revision 34. Uses Curve25519 for DH, SHA-256 for hashing within the pattern.</td>
+          </tr>
+          <tr>
+            <td>Session cipher</td>
+            <td>ChaCha20-Poly1305 (RFC 8439)</td>
+            <td>AEAD. 256-bit key, 96-bit nonce. Nonce is a monotonically increasing 64-bit counter, zero-padded to 96 bits.</td>
+          </tr>
+          <tr>
+            <td>Identity hash</td>
+            <td>SHA3-256 (FIPS 202)</td>
+            <td>Used to derive the IPv6 host portion from the Ed25519 public key.</td>
+          </tr>
+          <tr>
+            <td>Address prefix</td>
+            <td><code>fd47:06b8::/32</code></td>
+            <td>Unique Local Address (ULA) range as defined in RFC 4193. Addresses are deterministically derived; no DHCP or SLAAC is used.</td>
+          </tr>
+          <tr>
+            <td>Default port</td>
+            <td>9600 (TCP and UDP)</td>
+            <td>IANA registration pending. Sessions are multiplexed by Node ID within the protocol framing.</td>
+          </tr>
+          <tr>
+            <td>NAT64 prefix</td>
+            <td><code>fd47:06b8::/96</code> (lower 32 bits)</td>
+            <td>IPv4 addresses are embedded in the lower 32 bits of the IPv6 host portion. DNS64 rewrites A records to point at this range.</td>
+          </tr>
+          <tr>
+            <td>MTU</td>
+            <td>1280 bytes (minimum IPv6 MTU)</td>
+            <td>Ensures compatibility across all network paths without PMTUD. Configurable up to 9000 bytes on qualifying networks.</td>
+          </tr>
+          <tr>
+            <td>Nonce reuse policy</td>
+            <td>Hard limit at 2⁶⁴ − 1</td>
+            <td>Connection is terminated and a new session key is negotiated before nonce exhaustion.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 7. SECURITY -->
+      <h2 id="security">7 — Security properties <a href="#security" class="anchor-link">#</a></h2>
+
+      <table class="wikitable" aria-label="Security properties">
+        <thead>
+          <tr><th>Property</th><th>Provided by VX6?</th><th>Mechanism</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mutual authentication</td>
+            <td>Yes</td>
+            <td>Noise_XX — both parties prove ownership of their static Ed25519 private key.</td>
+          </tr>
+          <tr>
+            <td>Confidentiality</td>
+            <td>Yes</td>
+            <td>ChaCha20-Poly1305 AEAD encrypts all session traffic.</td>
+          </tr>
+          <tr>
+            <td>Integrity</td>
+            <td>Yes</td>
+            <td>Poly1305 MAC detects any bit-level tampering of ciphertext.</td>
+          </tr>
+          <tr>
+            <td>Forward secrecy</td>
+            <td>Yes</td>
+            <td>Ephemeral DH keys are generated per session and discarded after the handshake.</td>
+          </tr>
+          <tr>
+            <td>Initiator identity hiding</td>
+            <td>Yes</td>
+            <td>The initiator's static public key is transmitted only after the channel is encrypted (Noise_XX message 3).</td>
+          </tr>
+          <tr>
+            <td>Relay node trust</td>
+            <td>N/A — no relay nodes</td>
+            <td>The architecture has no relay nodes; the relay trust problem does not exist.</td>
+          </tr>
+          <tr>
+            <td>Exit node exposure</td>
+            <td>N/A — no exit nodes</td>
+            <td>Traffic terminates at the peer node. There is no exit node to compromise.</td>
+          </tr>
+          <tr>
+            <td>Traffic analysis (metadata)</td>
+            <td>Partial</td>
+            <td>The source and destination IPv6 addresses of VX6 packets are visible to network observers. Timing correlation attacks remain theoretically possible. Full traffic obfuscation is planned for Phase 2.</td>
+          </tr>
+          <tr>
+            <td>Censorship resistance</td>
+            <td>Partial (Phase 1)</td>
+            <td>VX6 uses a fixed default port (9600). Traffic obfuscation and port randomisation are planned for Phase 2.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="note">
+        <strong>Note:</strong> VX6 does not provide anonymity in the same sense that Tor does. A passive observer can see that two specific IPv6 addresses are communicating, even if they cannot read the content. VX6 is designed to replace Tor's relay architecture and performance characteristics — not to replicate its anonymity model entirely.
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrapper">
+      <div class="footer-inner">
+        <span>© 2026 VX6 Project. Open Protocol.</span>
+        <ul class="footer-links" role="list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="how-to-use.html">How to Use</a></li>
+          <li><a href="technical.html">Technical</a></li>
+          <li><a href="future.html">Future</a></li>
+          <li><a href="https://github.com/yourusername/vx6" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

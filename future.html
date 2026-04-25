@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VX6 Future Prospectus — Development Roadmap</title>
+  <meta name="description" content="The VX6 development roadmap: current status, planned phases, and guiding principles for the project." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrapper">
+      <div class="site-header-top">
+        <a href="index.html" class="site-logo">VX6</a>
+        <div class="header-actions">
+          <a href="https://github.com/yourusername/vx6" class="header-github" target="_blank" rel="noopener noreferrer" id="nav-github">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
+          <a href="index.html#contact" class="btn-collab" id="nav-cta">Collaborate</a>
+        </div>
+      </div>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html" id="nav-home">Home</a>
+        <a href="how-to-use.html" id="nav-use">How to Use</a>
+        <a href="technical.html" id="nav-tech">Technical Overview</a>
+        <a href="future.html" id="nav-future">Future Prospectus</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <div class="wrapper clearfix">
+
+      <div class="article-meta">
+        <strong>Future Prospectus</strong> &nbsp;·&nbsp; Development Roadmap &nbsp;·&nbsp;
+        <a href="index.html">← Main page</a> &nbsp;·&nbsp;
+        <a href="technical.html">Technical Reference</a>
+      </div>
+
+      <!-- TOC -->
+      <nav class="toc" aria-label="Table of contents">
+        <div class="toc-title">Contents</div>
+        <ol>
+          <li><a href="#scope">Scope</a></li>
+          <li><a href="#status">Current status</a></li>
+          <li><a href="#roadmap">Development phases</a>
+            <ol>
+              <li><a href="#phase1">Phase 1 — Direct router</a></li>
+              <li><a href="#phase2">Phase 2 — Mesh discovery</a></li>
+              <li><a href="#phase3">Phase 3 — Decentralised DNS</a></li>
+              <li><a href="#phase4">Phase 4 — Mobile</a></li>
+              <li><a href="#phase5">Phase 5 — Hardware</a></li>
+            </ol>
+          </li>
+          <li><a href="#principles">Non-negotiable properties</a></li>
+          <li><a href="#out-of-scope">Out of scope</a></li>
+          <li><a href="#contribute">Contributing</a></li>
+        </ol>
+      </nav>
+
+      <h1 id="top">VX6 Future Prospectus</h1>
+
+      <p>This page describes where VX6 is going. It is a living document and will be updated as phases are completed or plans change. Dates are not committed because accuracy is more important than confidence.</p>
+
+      <!-- 1. SCOPE -->
+      <h2 id="scope">1 — Scope <a href="#scope" class="anchor-link">#</a></h2>
+
+      <p>The long-term goal of VX6 is to make relay infrastructure unnecessary as a default mode of internet operation. The immediate goal (Phase 1) is a working direct router that replaces Tor for use cases where relay latency and exit node exposure are the primary concerns.</p>
+
+      <p>Subsequent phases extend VX6 from a point-to-point tool to a general-purpose network layer: one where every device can be addressed by its public key, reached directly over IPv6, and identified without consulting any registry or authority.</p>
+
+      <!-- 2. CURRENT STATUS -->
+      <h2 id="status">2 — Current status <a href="#status" class="anchor-link">#</a></h2>
+
+      <table class="wikitable" aria-label="Current implementation status">
+        <thead>
+          <tr><th>Component</th><th>Status</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Identity derivation (Layer 1)</td>
+            <td>Complete</td>
+            <td>Ed25519 keypair generation and IPv6 address derivation via SHA3-256.</td>
+          </tr>
+          <tr>
+            <td>Noise_XX handshake (Layer 2)</td>
+            <td>Complete</td>
+            <td>Mutual authentication. Address-to-key binding verification included.</td>
+          </tr>
+          <tr>
+            <td>Packet forwarding (Layer 3)</td>
+            <td>Complete</td>
+            <td>Direct IPv6 forwarding with ChaCha20-Poly1305 encryption.</td>
+          </tr>
+          <tr>
+            <td>NAT64 bridge</td>
+            <td>Complete</td>
+            <td>Legacy IPv4 traffic translated transparently. DNS64 component included.</td>
+          </tr>
+          <tr>
+            <td>SOCKS5 proxy</td>
+            <td>Complete</td>
+            <td>Exposes a local SOCKS5 endpoint for application-level proxying.</td>
+          </tr>
+          <tr>
+            <td>Peer discovery</td>
+            <td>Not started</td>
+            <td>Planned for Phase 2. Currently peers must be dialled by address directly.</td>
+          </tr>
+          <tr>
+            <td>Traffic obfuscation</td>
+            <td>Not started</td>
+            <td>Planned for Phase 2. Protocol fingerprint is currently identifiable.</td>
+          </tr>
+          <tr>
+            <td>Decentralised DNS</td>
+            <td>Not started</td>
+            <td>Planned for Phase 3.</td>
+          </tr>
+          <tr>
+            <td>Mobile client</td>
+            <td>Not started</td>
+            <td>Planned for Phase 4.</td>
+          </tr>
+          <tr>
+            <td>Hardware implementation</td>
+            <td>Not started</td>
+            <td>Long-term goal, Phase 5.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 3. ROADMAP -->
+      <h2 id="roadmap">3 — Development phases <a href="#roadmap" class="anchor-link">#</a></h2>
+
+      <div class="roadmap-item reveal" id="phase1">
+        <div class="roadmap-phase">Phase 1</div>
+        <div>
+          <span class="status-badge done">Complete</span>
+          <h4>Direct IPv6 Router</h4>
+          <p>A working peer-to-peer router with mutual cryptographic authentication, encrypted tunnelling, NAT64 support for legacy applications, and a SOCKS5 proxy interface.</p>
+          <p><strong>Deliverables:</strong> <code>vx6 init</code>, <code>vx6 connect</code>, <code>vx6 proxy</code>, <code>vx6 nat64 up</code>, <code>vx6 status</code></p>
+          <p><strong>Open issues:</strong> Protocol fingerprinting is detectable. Peer discovery requires out-of-band exchange of IPv6 addresses. Windows support requires WSL2.</p>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal" id="phase2">
+        <div class="roadmap-phase">Phase 2</div>
+        <div>
+          <span class="status-badge active">In Development</span>
+          <h4>VX6 Mesh — Spontaneous Peer Discovery</h4>
+          <p>A distributed hash table (DHT) built on top of the VX6 address space. The DHT keyspace is aligned with the IPv6 address space: each node is responsible for the DHT region corresponding to its own IPv6 address. Peer lookup reduces to finding the node closest to a target address in the DHT. No bootstrap server is required after Phase 1 nodes are reached for the first time.</p>
+          <p>Phase 2 also introduces traffic obfuscation at the transport layer to resist protocol fingerprinting and deep packet inspection.</p>
+          <p><strong>Planned deliverables:</strong> <code>vx6 mesh join</code>, <code>vx6 peers</code>, automatic reconnection, protocol camouflage mode.</p>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal" id="phase3">
+        <div class="roadmap-phase">Phase 3</div>
+        <div>
+          <span class="status-badge">Planned</span>
+          <h4>VX6 DNS — Decentralised Name Resolution</h4>
+          <p>A naming layer that allows human-readable identifiers (e.g. <code>alice.vx6</code>) to resolve to VX6 IPv6 addresses. Name ownership is proved by Ed25519 signature; names are registered by publishing a signed record to the VX6 DHT. There is no registrar, no ICANN delegation, and no single point of failure. A name is owned by whoever holds the corresponding private key.</p>
+          <p>The <code>.vx6</code> TLD will not require ICANN registration; it operates entirely within the VX6 network and resolves only on nodes running the VX6 DNS client.</p>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal" id="phase4">
+        <div class="roadmap-phase">Phase 4</div>
+        <div>
+          <span class="status-badge">Planned</span>
+          <h4>VX6 Mobile — Native Android and iOS</h4>
+          <p>A native implementation for Android and iOS that installs as a VPN profile. The device generates its own Ed25519 keypair, derives a permanent VX6 IPv6 address, and joins the VX6 network without a desktop intermediary. The implementation does not require a jailbreak, root, or sideloading on either platform. No application-level changes are needed for existing apps to route through VX6.</p>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal" id="phase5">
+        <div class="roadmap-phase">Phase 5</div>
+        <div>
+          <span class="status-badge">Long Term</span>
+          <h4>VX6 Hardware — Embedded Router</h4>
+          <p>A reference hardware implementation targeting low-power, commodity router hardware (OpenWRT-compatible devices, small-board computers). The goal is that routers ship with VX6 support pre-installed and enabled by default, making the direct internet the default mode of operation rather than an overlay. This phase depends on Phase 2 (mesh) and Phase 3 (DNS) being stable.</p>
+        </div>
+      </div>
+
+      <!-- 4. PRINCIPLES -->
+      <h2 id="principles">4 — Non-negotiable properties <a href="#principles" class="anchor-link">#</a></h2>
+
+      <p>These properties will not be compromised for velocity, commercial opportunity, or partnership requirements:</p>
+
+      <table class="wikitable" aria-label="Core principles">
+        <thead><tr><th>Property</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Open specification</td>
+            <td>The full VX6 protocol specification is and will remain freely available under a permissive licence. Any party may implement it, fork it, or audit it without restriction.</td>
+          </tr>
+          <tr>
+            <td>No central authority</td>
+            <td>There will be no VX6 registry, no VX6 Inc., and no mechanism by which a third party can disable or censor the network. The protocol is the institution.</td>
+          </tr>
+          <tr>
+            <td>Performance as a constraint</td>
+            <td>Latency is treated as a security property, not an optimisation target. Features that measurably increase latency without commensurate security benefit will not be merged.</td>
+          </tr>
+          <tr>
+            <td>Backwards compatibility</td>
+            <td>IPv4 applications must always be able to route through VX6 via NAT64. Adoption cannot require a flag day or changes to existing applications.</td>
+          </tr>
+          <tr>
+            <td>Self-sovereign identity</td>
+            <td>The only trust anchor in the system is a keypair that the node generates and controls. No CA, no relay operator, no bootstrap server is trusted in the final design.</td>
+          </tr>
+          <tr>
+            <td>Censorship resistance</td>
+            <td>Traffic obfuscation and protocol camouflage are treated as first-class engineering requirements, not optional features. VX6 must remain usable in high-restriction network environments.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 5. OUT OF SCOPE -->
+      <h2 id="out-of-scope">5 — Out of scope <a href="#out-of-scope" class="anchor-link">#</a></h2>
+
+      <p>The following are explicitly not goals of VX6:</p>
+
+      <ul>
+        <li><strong>Full anonymity.</strong> VX6 does not hide the fact that two nodes are communicating. The IPv6 source and destination addresses of VX6 packets are visible to network observers. See the <a href="technical.html#security">security properties table</a> for detail.</li>
+        <li><strong>Content hosting.</strong> VX6 is a transport protocol. It does not define how applications should structure their data or services.</li>
+        <li><strong>Consensus or blockchain.</strong> VX6 uses a DHT for peer discovery and DNS; it does not use consensus mechanisms or a distributed ledger.</li>
+        <li><strong>Cryptocurrency integration.</strong> There is no token, no incentive layer, and no payment system. Relay bandwidth is irrelevant because there are no relays.</li>
+      </ul>
+
+      <!-- 6. CONTRIBUTING -->
+      <h2 id="contribute">6 — Contributing <a href="#contribute" class="anchor-link">#</a></h2>
+
+      <p>Phase 2 (mesh peer discovery) is the current active development focus. The following areas would benefit most from external contributors:</p>
+
+      <ul>
+        <li><strong>DHT implementation</strong> — A Kademlia-style DHT adapted for the VX6 address space. Experience with libp2p or similar is useful.</li>
+        <li><strong>Protocol security review</strong> — Formal analysis of the Noise_XX instantiation and the address derivation scheme.</li>
+        <li><strong>Traffic obfuscation</strong> — Experience with obfs4, Shadowsocks, or similar protocols is directly applicable.</li>
+        <li><strong>Mobile</strong> — iOS and Android VPN profile implementation. Swift and Kotlin familiarity required.</li>
+        <li><strong>Embedded systems</strong> — OpenWRT module development for Phase 5 groundwork.</li>
+      </ul>
+
+      <p>To get in touch, use the form on the <a href="index.html#contact">main page</a> or open an issue on <a href="https://github.com/yourusername/vx6" target="_blank" rel="noopener">GitHub</a>.</p>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrapper">
+      <div class="footer-inner">
+        <span>© 2026 VX6 Project. Open Protocol.</span>
+        <ul class="footer-links" role="list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="how-to-use.html">How to Use</a></li>
+          <li><a href="technical.html">Technical</a></li>
+          <li><a href="future.html">Future</a></li>
+          <li><a href="https://github.com/yourusername/vx6" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

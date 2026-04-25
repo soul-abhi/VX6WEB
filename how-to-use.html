@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Use VX6 — Installation and Setup</title>
+  <meta name="description" content="Step-by-step installation and configuration guide for VX6. Covers prerequisites, node initialisation, connecting peers, and traffic routing." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrapper">
+      <div class="site-header-top">
+        <a href="index.html" class="site-logo">VX6</a>
+        <div class="header-actions">
+          <a href="https://github.com/yourusername/vx6" class="header-github" target="_blank" rel="noopener noreferrer" id="nav-github">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </a>
+          <a href="index.html#contact" class="btn-collab" id="nav-cta">Collaborate</a>
+        </div>
+      </div>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html" id="nav-home">Home</a>
+        <a href="how-to-use.html" id="nav-use">How to Use</a>
+        <a href="technical.html" id="nav-tech">Technical Overview</a>
+        <a href="future.html" id="nav-future">Future Prospectus</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <div class="wrapper clearfix">
+
+      <div class="article-meta">
+        <strong>How to Use VX6</strong> &nbsp;·&nbsp; Setup Guide &nbsp;·&nbsp;
+        <a href="index.html">← Main page</a> &nbsp;·&nbsp;
+        <a href="technical.html">Technical Reference</a>
+      </div>
+
+      <!-- TOC -->
+      <nav class="toc" aria-label="Table of contents">
+        <div class="toc-title">Contents</div>
+        <ol>
+          <li><a href="#prerequisites">Prerequisites</a>
+            <ol>
+              <li><a href="#ipv6">IPv6 connectivity</a></li>
+              <li><a href="#os">Supported platforms</a></li>
+              <li><a href="#firewall">Firewall requirements</a></li>
+            </ol>
+          </li>
+          <li><a href="#installation">Installation</a></li>
+          <li><a href="#init">Node initialisation</a></li>
+          <li><a href="#connect">Connecting to a peer</a></li>
+          <li><a href="#routing">Routing traffic</a></li>
+          <li><a href="#verify">Verifying status</a></li>
+          <li><a href="#config">Configuration reference</a></li>
+        </ol>
+      </nav>
+
+      <h1 id="top">How to Use VX6 — Installation and Setup</h1>
+
+      <p>This guide covers the complete process of installing VX6, initialising a node, establishing a connection to a peer, and routing application traffic through the tunnel. Estimated setup time for an experienced user on a pre-configured IPv6 network: under five minutes.</p>
+
+      <!-- 1. PREREQUISITES -->
+      <h2 id="prerequisites">1 — Prerequisites <a href="#prerequisites" class="anchor-link">#</a></h2>
+
+      <h3 id="ipv6">1.1 — IPv6 connectivity <a href="#ipv6" class="anchor-link">#</a></h3>
+
+      <p>VX6 requires a publicly routable IPv6 address. To verify that your machine has one:</p>
+
+      <pre class="code-block"><span class="shell-line"><span class="t-comment"># Linux / macOS</span></span>
+<span class="shell-line"><span class="t-prompt">$ </span><span class="t-cmd">curl -6 ifconfig.me</span></span>
+<span class="shell-line"><span class="t-out">2001:db8:cafe::1   # a public IPv6 address</span></span></pre>
+
+      <p>If your machine only shows a link-local address (<code>fe80::</code>) or no IPv6 address at all, contact your ISP to enable IPv6, or use a tunnel broker such as <a href="https://tunnelbroker.net" target="_blank" rel="noopener">Hurricane Electric</a> to obtain a routable address. VX6 does not function over NAT64 on the <em>initiating</em> side; the node itself must be publicly reachable.</p>
+
+      <h3 id="os">1.2 — Supported platforms <a href="#os" class="anchor-link">#</a></h3>
+
+      <table class="wikitable" aria-label="Supported operating systems">
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Minimum version</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Linux</td>
+            <td>Kernel 5.4 (2019)</td>
+            <td>Most distributions. Requires CAP_NET_ADMIN for tunnel interface.</td>
+          </tr>
+          <tr>
+            <td>macOS</td>
+            <td>12 (Monterey)</td>
+            <td>System Integrity Protection must permit network extensions.</td>
+          </tr>
+          <tr>
+            <td>Windows</td>
+            <td>10/11 with WSL2</td>
+            <td>Run <code>vx6</code> inside WSL2. Native Windows support planned for Phase 2.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 id="firewall">1.3 — Firewall requirements <a href="#firewall" class="anchor-link">#</a></h3>
+
+      <p>Allow inbound and outbound traffic on port <strong>9600</strong> for both TCP and UDP. VX6 prefers QUIC (UDP) for performance; TCP is used automatically if UDP is unavailable.</p>
+
+      <pre class="code-block"><span class="shell-line"><span class="t-comment"># Linux (ufw)</span></span>
+<span class="shell-line"><span class="t-prompt">$ </span><span class="t-cmd">ufw allow 9600/tcp</span></span>
+<span class="shell-line"><span class="t-prompt">$ </span><span class="t-cmd">ufw allow 9600/udp</span></span></pre>
+
+      <!-- 2. INSTALLATION -->
+      <h2 id="installation">2 — Installation <a href="#installation" class="anchor-link">#</a></h2>
+
+      <p>The installer script downloads the latest signed binary, verifies its SHA256 checksum, and adds <code>vx6</code> to your system PATH.</p>
+
+      <pre class="code-block"><span class="shell-line"><span class="t-comment"># Linux / macOS</span></span>
+<span class="shell-line"><span class="t-prompt">$ </span><span class="t-cmd">curl -sSL https://vx6.io/install.sh | bash</span></span>
+<span class="shell-line">&nbsp;</span>
+<span class="shell-line"><span class="t-comment"># Windows — run PowerShell as Administrator</span></span>
+<span class="shell-line"><span class="t-prompt">PS> </span><span class="t-cmd">iwr https://vx6.io/install.ps1 | iex</span></span>
+<span class="shell-line">&nbsp;</span>
+<span class="shell-line"><span class="t-success">✔  VX6 v1.0.0 installed at /usr/local/bin/vx6</span></span></pre>
+
+      <div class="note">
+        <strong>Note:</strong> Always verify the installer script before piping it to your shell. The SHA256 checksum for each release is published at <a href="https://vx6.io/checksums" target="_blank" rel="noopener">vx6.io/checksums</a>.
+      </div>
+
+      <!-- 3. INIT -->
+      <h2 id="init">3 — Node initialisation <a href="#init" class="anchor-link">#</a></h2>
+
+      <p>Run <code>vx6 init</code> once after installation. This command generates an Ed25519 keypair, derives your VX6 IPv6 address from the public key, and writes a configuration file to <code>~/.vx6/config.toml</code>.</p>
+
+      <pre class="code-block"><span class="shell-line"><span class="t-prompt">$ </span><span class="t-cmd">vx6 init</span></span>
+<span class="shell-line">&nbsp;</span>
+<span class="shell-line"><span class="t-key">Generated keypair  </span><span class="t-out">~/.vx6/identity.ed25519</span></span>
+<span class="shell-line"><span class="t-key">Derived IPv6       </span><span class="t-cmd">fd47:6b8::cafe:babe</span></span>
+<span class="shell-line"><span class="t-key">Node ID            </span><span class="t-cmd">vx6:Ed25519:a3f9c2...b7d2</span></span>
+<span class="shell-line"><span class="t-key">Config             </span><span class="t-out">~/.vx6/config.toml</span></span>
+<span class="shell-line">&nbsp;</span>
+<span class="shell-line"><span class="t-success">✔  Node initialised. Back up ~/.vx6/identity.ed25519 — it cannot be recovered.</span></span></pre>
+
+      <div class="warning">
+        <strong>Warning:</strong> Back up <code>~/.vx6/identity.ed25519</code> immediately. Your VX6 IPv6 address is derived from this key. If you lose it, your address cannot be recovered and peers will not be able to reach you at the same address.
+      </div>
+
+      <!-- 4. CONNECT -->
+      <h2 id="connect">4 — Connecting to a peer <a href="#connect" class="anchor-link">#</a></h2>
+
+      <p>A peer can be dialled by its raw IPv6 address or by its Node ID. Both methods result in the same direct connection — no routing servers are consulted during dialling.</p>
+
+      <pre class="code-block"><span class="shell-line"><span class="t-comment"># Dial by IPv6 address (with port)</span></span>
+<span class="shell-line"><span class="t-prompt">$ </span><span class="t-cmd">vx6 connect [2001:db8::dead:beef]:9600</span></span>
+<span class="shell-line">&nbsp;</span>
+<span class="shell-line"><span class="t-comment"># Dial by Node ID (resolves to IPv6 via DHT in Phase 2; direct in Phase 1)</span></span>
+<span class="shell-line"><span class="t-prompt">$ </span><span class="t-cmd">vx6 connect vx6:Ed25519:f7a2...de01</span></span>
+<span class="shell-line">&nbsp;</span>
+<span class="shell-line"><span class="t-key">Resolved          </span><span class="t-cmd">2001:db8::dead:beef:9600</span></span>
+<span class="shell-line"><span class="t-key">Handshake         </span><span class="t-success">Noise_XX — mutual auth OK</span></span>
+<span class="shell-line"><span class="t-key">Latency           </span><span class="t-success">3 ms</span></span>
+<span class="shell-line"><span class="t-key">Session key       </span><span class="t-out">ChaCha20-Poly1305 established</span></span>
+<span class="shell-line">&nbsp;</span>
+<span class="shell-line"><span class="t-success">✔  Tunnel active. All traffic is end-to-end encrypted.</span></span></pre>
+
+      <!-- 5. ROUTING -->
+      <h2 id="routing">5 — Routing traffic <a href="#routing" class="anchor-link">#</a></h2>
+
+      <p>VX6 exposes two interfaces for routing application traffic:</p>
+
+      <ul>
+        <li><strong>SOCKS5 proxy</strong> — available on <code>127.0.0.1:1080</code>. Configure any SOCKS5-capable application to point at this address.</li>
+        <li><strong>NAT64 interface</strong> — a virtual network interface that transparently intercepts IPv4 traffic and routes it through the VX6 tunnel. Applications require no modification.</li>
+      </ul>
+
+      <pre class="code-block"><span class="shell-line"><span class="t-comment"># Start the SOCKS5 proxy</span></span>
+<span class="shell-line"><span class="t-prompt">$ </span><span class="t-cmd">vx6 proxy --socks5 127.0.0.1:1080</span></span>
+<span class="shell-line"><span class="t-success">✔  SOCKS5 proxy listening on 127.0.0.1:1080</span></span>
+<span class="shell-line">&nbsp;</span>
+<span class="shell-line"><span class="t-comment"># Test with curl</span></span>
+<span class="shell-line"><span class="t-prompt">$ </span><span class="t-cmd">curl --proxy socks5h://127.0.0.1:1080 https://example.com</span></span>
+<span class="shell-line"><span class="t-out">HTTP/2 200</span></span>
+<span class="shell-line">&nbsp;</span>
+<span class="shell-line"><span class="t-comment"># Enable the NAT64 transparent interface</span></span>
+<span class="shell-line"><span class="t-prompt">$ </span><span class="t-cmd">sudo vx6 nat64 up</span></span>
+<span class="shell-line"><span class="t-success">✔  NAT64 interface vx6nat0 active</span></span></pre>
+
+      <!-- 6. VERIFY -->
+      <h2 id="verify">6 — Verifying status <a href="#verify" class="anchor-link">#</a></h2>
+
+      <pre class="code-block"><span class="shell-line"><span class="t-prompt">$ </span><span class="t-cmd">vx6 status</span></span>
+<span class="shell-line">&nbsp;</span>
+<span class="shell-line"><span class="t-key">Node ID      </span><span class="t-cmd">vx6:Ed25519:a3f9c2...b7d2</span></span>
+<span class="shell-line"><span class="t-key">IPv6 address </span><span class="t-cmd">fd47:6b8::cafe:babe</span></span>
+<span class="shell-line"><span class="t-key">Peers        </span><span class="t-success">2 connected</span></span>
+<span class="shell-line"><span class="t-key">Latency avg  </span><span class="t-success">3 ms</span></span>
+<span class="shell-line"><span class="t-key">Uptime       </span><span class="t-out">00:14:38</span></span>
+<span class="shell-line"><span class="t-key">SOCKS5       </span><span class="t-success">127.0.0.1:1080 active</span></span>
+<span class="shell-line"><span class="t-key">Status       </span><span class="t-success">Operational</span></span></pre>
+
+      <!-- 7. CONFIG REFERENCE -->
+      <h2 id="config">7 — Configuration reference <a href="#config" class="anchor-link">#</a></h2>
+
+      <p>The configuration file is located at <code>~/.vx6/config.toml</code>. The following keys are recognised:</p>
+
+      <table class="wikitable" aria-label="Configuration reference">
+        <thead><tr><th>Key</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>port</code></td><td><code>9600</code></td><td>Listening port for inbound connections (TCP and UDP).</td></tr>
+          <tr><td><code>identity</code></td><td><code>~/.vx6/identity.ed25519</code></td><td>Path to the Ed25519 private key file.</td></tr>
+          <tr><td><code>transport</code></td><td><code>"quic"</code></td><td>Preferred transport. Options: <code>"quic"</code>, <code>"tcp"</code>, <code>"auto"</code>.</td></tr>
+          <tr><td><code>socks5_bind</code></td><td><code>"127.0.0.1:1080"</code></td><td>Bind address for the SOCKS5 proxy. Set to <code>""</code> to disable.</td></tr>
+          <tr><td><code>nat64</code></td><td><code>false</code></td><td>Enable the NAT64 transparent interface on startup.</td></tr>
+          <tr><td><code>log_level</code></td><td><code>"info"</code></td><td>Verbosity. Options: <code>"error"</code>, <code>"warn"</code>, <code>"info"</code>, <code>"debug"</code>, <code>"trace"</code>.</td></tr>
+        </tbody>
+      </table>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrapper">
+      <div class="footer-inner">
+        <span>© 2026 VX6 Project. Open Protocol.</span>
+        <ul class="footer-links" role="list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="how-to-use.html">How to Use</a></li>
+          <li><a href="technical.html">Technical</a></li>
+          <li><a href="future.html">Future</a></li>
+          <li><a href="https://github.com/yourusername/vx6" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
