@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import PageShell from '@/components/PageShell';
 
 export const metadata: Metadata = {
-  title: 'Sponsor',
+  title: 'Sponsors',
   description:
     'Support VX6 through GitHub Sponsors, infrastructure support, ecosystem partnerships, and technical collaboration.',
   alternates: {
@@ -15,7 +15,7 @@ const sponsorCompanies = [
     name: 'HACKITISE LAB Pvt. Ltd.',
     website: 'https://hackitiselabs.in/',
     email: 'connect@hackitiselabs.in',
-    body: 'Technology partner supporting secure engineering, product delivery, and infrastructure collaboration for modern decentralized platforms.',
+    body: 'HACKITISE LAB Pvt. Ltd. is sponsoring VX6 and supporting secure engineering, product delivery, and infrastructure collaboration for the project.',
   },
 ];
 
@@ -26,13 +26,13 @@ export default function SponsorPage() {
         <div className="wrapper">
           <article className="article-shell">
             <p className="article-meta">Community and sponsorship</p>
-            <h1>Sponsor VX6</h1>
+            <h1>Sponsors</h1>
 
             <div className="sponsor-layout">
               <section className="sponsor-panel">
                 <div className="panel-head">
-                  <h2>Where support goes</h2>
-                  <span className="panel-tag">Minimal page</span>
+                  <h2>Where sponsor support goes</h2>
+                  <span className="panel-tag">Project funding</span>
                 </div>
                 <div className="feature-grid sponsor-grid">
                   <article className="feature-card">
@@ -50,17 +50,18 @@ export default function SponsorPage() {
                 </div>
 
                 <div className="note">
-                  <strong>Good use for the left-side space:</strong> show relay-region coverage, funding
-                  goals, public testnet health, or a simple timeline of what recent sponsorship unlocked.
+                  <strong>Current sponsor note:</strong> VX6 is actively looking for infrastructure,
+                  documentation, and ecosystem sponsors who want to help grow a public peer-to-peer
+                  service network and the apps built on top of it.
                 </div>
               </section>
 
               <aside className="sponsor-panel sponsor-side">
                 <div className="panel-head">
-                  <h2>Support VX6</h2>
+                  <h2>GitHub Sponsors</h2>
                   <a
                     className="github-button"
-                    href="https://github.com"
+                    href="https://github.com/sponsors/ethical-buddy"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -68,9 +69,23 @@ export default function SponsorPage() {
                   </a>
                 </div>
 
-                <div className="sponsor-embed-slot">
-                  <strong>GitHub Sponsors button slot</strong>
-                  <p>Paste your GitHub sponsor button or embed code into this block.</p>
+                <div className="sponsor-embed-slot sponsor-iframe-wrap">
+                  <iframe
+                    src="https://github.com/sponsors/ethical-buddy/card"
+                    title="Sponsor ethical-buddy"
+                    height="225"
+                    width="600"
+                    style={{ border: 0, width: '100%' }}
+                    loading="lazy"
+                  />
+                </div>
+
+                <div className="sponsor-side-copy">
+                  <strong>Current sponsors</strong>
+                  <p>
+                    Sponsorship can cover public nodes, relay testing, documentation, and the builder
+                    ecosystem around VX6.
+                  </p>
                 </div>
 
                 <div className="sponsor-company-list">

@@ -258,9 +258,9 @@ export function HiddenFlowDiagram() {
   return (
     <DiagramFrame
       title="Hidden service flow"
-      caption="Setup path and data path are different. One chosen intro helps set up the connection. The actual service traffic later moves through the client relay leg, rendezvous X, owner relay leg, and finally into the owner’s localhost service."
+      caption="Setup and traffic are separate. The client resolves the alias, chooses one intro, signals through the owner-side guards, and then both sides build full relay legs toward the same rendezvous point before traffic reaches the owner’s localhost service."
     >
-      <svg viewBox="0 0 980 560" role="img" aria-label="VX6 hidden service flow">
+      <svg viewBox="0 0 1340 760" role="img" aria-label="VX6 hidden service flow">
         <defs>
           <marker
             id="hidden-arrow"
@@ -274,76 +274,97 @@ export function HiddenFlowDiagram() {
           </marker>
         </defs>
 
-        <text x="120" y="34" className="diagram-note">Setup path</text>
-        <line x1="198" y1="30" x2="292" y2="30" className="diagram-path-soft" />
-        <text x="534" y="34" className="diagram-note">Live data path</text>
-        <line x1="628" y1="30" x2="726" y2="30" className="diagram-path" />
+        <text x="74" y="48" className="diagram-note">Setup path</text>
+        <line x1="150" y1="44" x2="270" y2="44" className="diagram-path-soft" />
+        <text x="332" y="48" className="diagram-note">Live data path</text>
+        <line x1="430" y1="44" x2="552" y2="44" className="diagram-path" />
 
-        <rect x="26" y="62" width="180" height="112" rx="16" className="diagram-panel" />
-        <text x="54" y="94" className="diagram-label">Client</text>
-        <text x="54" y="122" className="diagram-text">Resolves hidden alias</text>
-        <text x="54" y="146" className="diagram-text">Chooses one intro and one X</text>
+        <rect x="38" y="88" width="238" height="132" rx="16" className="diagram-panel" />
+        <text x="70" y="126" className="diagram-label">Client</text>
+        <text x="70" y="158" className="diagram-text">Resolves hidden alias</text>
+        <text x="70" y="184" className="diagram-text">Chooses one intro and one rendezvous X</text>
+        <text x="70" y="210" className="diagram-text">Builds setup and traffic legs separately</text>
 
-        <rect x="270" y="44" width="420" height="60" rx="16" className="diagram-panel diagram-panel-accent" />
-        <text x="480" y="72" className="diagram-label" textAnchor="middle">Hidden alias descriptor</text>
-        <text x="480" y="94" className="diagram-text" textAnchor="middle">
+        <rect x="318" y="88" width="706" height="72" rx="16" className="diagram-panel diagram-panel-accent" />
+        <text x="671" y="126" className="diagram-label" textAnchor="middle">Hidden alias descriptor</text>
+        <text x="671" y="150" className="diagram-text" textAnchor="middle">
           3 active intros | 2 standby intros | 2 guards | 3 rendezvous candidates
         </text>
 
-        <rect x="254" y="134" width="230" height="88" rx="16" className="diagram-chip" />
-        <text x="370" y="158" className="diagram-chip-text" textAnchor="middle">3 active intros</text>
-        <circle cx="320" cy="190" r="18" className="diagram-node" />
-        <circle cx="370" cy="190" r="18" className="diagram-node diagram-node-accent" />
-        <circle cx="420" cy="190" r="18" className="diagram-node" />
-        <text x="320" y="214" className="diagram-text-center">i1</text>
-        <text x="370" y="214" className="diagram-text-center">chosen</text>
-        <text x="420" y="214" className="diagram-text-center">i3</text>
+        <rect x="318" y="194" width="286" height="118" rx="16" className="diagram-chip" />
+        <text x="461" y="224" className="diagram-chip-text" textAnchor="middle">3 active intros</text>
+        <circle cx="390" cy="270" r="20" className="diagram-node" />
+        <circle cx="462" cy="270" r="20" className="diagram-node diagram-node-accent" />
+        <circle cx="534" cy="270" r="20" className="diagram-node" />
+        <text x="390" y="300" className="diagram-text-center">i1</text>
+        <text x="462" y="300" className="diagram-text-center">chosen i2</text>
+        <text x="534" y="300" className="diagram-text-center">i3</text>
 
-        <rect x="254" y="238" width="230" height="64" rx="16" className="diagram-chip diagram-chip-soft" />
-        <text x="370" y="265" className="diagram-chip-text" textAnchor="middle">2 standby intros</text>
-        <text x="370" y="287" className="diagram-text" textAnchor="middle">Failover only, not used in the normal path</text>
+        <rect x="318" y="330" width="286" height="80" rx="16" className="diagram-chip diagram-chip-soft" />
+        <text x="461" y="360" className="diagram-chip-text" textAnchor="middle">2 standby intros</text>
+        <text x="461" y="388" className="diagram-text" textAnchor="middle">Failover only, not used in the normal path</text>
 
-        <rect x="540" y="146" width="160" height="80" rx="16" className="diagram-chip" />
-        <text x="620" y="170" className="diagram-chip-text" textAnchor="middle">2 guards</text>
-        <circle cx="590" cy="198" r="16" className="diagram-node" />
-        <circle cx="650" cy="198" r="16" className="diagram-node" />
-        <text x="590" y="220" className="diagram-text-center">g1</text>
-        <text x="650" y="220" className="diagram-text-center">g2</text>
+        <rect x="706" y="204" width="212" height="106" rx="16" className="diagram-chip" />
+        <text x="812" y="234" className="diagram-chip-text" textAnchor="middle">2 guard nodes</text>
+        <circle cx="772" cy="278" r="18" className="diagram-node" />
+        <circle cx="852" cy="278" r="18" className="diagram-node" />
+        <text x="772" y="304" className="diagram-text-center">g1</text>
+        <text x="852" y="304" className="diagram-text-center">g2</text>
 
-        <rect x="748" y="118" width="200" height="112" rx="16" className="diagram-panel" />
-        <text x="776" y="150" className="diagram-label">Hidden service owner</text>
-        <text x="776" y="178" className="diagram-text">Receives setup through guards</text>
-        <text x="776" y="202" className="diagram-text">Builds its own relay leg to X</text>
+        <rect x="988" y="194" width="298" height="122" rx="16" className="diagram-panel" />
+        <text x="1020" y="232" className="diagram-label">Hidden service owner</text>
+        <text x="1020" y="264" className="diagram-text">Receives setup through guards</text>
+        <text x="1020" y="290" className="diagram-text">Builds its own relay leg toward X</text>
 
-        <path d="M206 128H246" className="diagram-path-soft" markerEnd="url(#hidden-arrow)" />
-        <path d="M388 190H532" className="diagram-path-soft" markerEnd="url(#hidden-arrow)" />
-        <path d="M700 186H740" className="diagram-path-soft" markerEnd="url(#hidden-arrow)" />
+        <path d="M276 154H310" className="diagram-path-soft" markerEnd="url(#hidden-arrow)" />
+        <path d="M482 270H696" className="diagram-path-soft" markerEnd="url(#hidden-arrow)" />
+        <path d="M918 278H978" className="diagram-path-soft" markerEnd="url(#hidden-arrow)" />
 
-        <rect x="40" y="372" width="220" height="78" rx="16" className="diagram-chip diagram-chip-soft" />
-        <text x="150" y="398" className="diagram-chip-text" textAnchor="middle">Client relay leg</text>
-        <text x="150" y="422" className="diagram-text" textAnchor="middle">3 hops in fast mode</text>
-        <text x="150" y="442" className="diagram-text" textAnchor="middle">5 hops in balanced mode</text>
+        <rect x="38" y="500" width="288" height="182" rx="16" className="diagram-chip diagram-chip-soft" />
+        <text x="182" y="532" className="diagram-chip-text" textAnchor="middle">Client relay leg</text>
+        <text x="182" y="558" className="diagram-text" textAnchor="middle">3 hops in fast mode</text>
+        <text x="182" y="582" className="diagram-text" textAnchor="middle">5 hops in balanced mode</text>
+        <circle cx="92" cy="632" r="20" className="diagram-node" />
+        <circle cx="182" cy="632" r="20" className="diagram-node" />
+        <circle cx="272" cy="632" r="20" className="diagram-node" />
+        <text x="92" y="662" className="diagram-text-center">r1</text>
+        <text x="182" y="662" className="diagram-text-center">r2</text>
+        <text x="272" y="662" className="diagram-text-center">r3</text>
 
-        <circle cx="490" cy="410" r="32" className="diagram-node diagram-node-accent" />
-        <text x="490" y="454" className="diagram-text-center">rendezvous X</text>
+        <circle cx="670" cy="620" r="44" className="diagram-node diagram-node-accent" />
+        <text x="670" y="674" className="diagram-text-center">rendezvous X</text>
 
-        <rect x="574" y="372" width="220" height="78" rx="16" className="diagram-chip diagram-chip-soft" />
-        <text x="684" y="398" className="diagram-chip-text" textAnchor="middle">Owner relay leg</text>
-        <text x="684" y="422" className="diagram-text" textAnchor="middle">Separate path from owner to X</text>
-        <text x="684" y="442" className="diagram-text" textAnchor="middle">Chosen after setup completes</text>
+        <rect x="910" y="500" width="288" height="182" rx="16" className="diagram-chip diagram-chip-soft" />
+        <text x="1054" y="532" className="diagram-chip-text" textAnchor="middle">Owner relay leg</text>
+        <text x="1054" y="558" className="diagram-text" textAnchor="middle">Separate path from owner to X</text>
+        <text x="1054" y="582" className="diagram-text" textAnchor="middle">Chosen after setup completes</text>
+        <circle cx="964" cy="632" r="20" className="diagram-node" />
+        <circle cx="1054" cy="632" r="20" className="diagram-node" />
+        <circle cx="1144" cy="632" r="20" className="diagram-node" />
+        <text x="964" y="662" className="diagram-text-center">r4</text>
+        <text x="1054" y="662" className="diagram-text-center">r5</text>
+        <text x="1144" y="662" className="diagram-text-center">r6</text>
 
-        <rect x="812" y="372" width="136" height="78" rx="16" className="diagram-service" />
-        <text x="880" y="398" className="diagram-chip-text" textAnchor="middle">Localhost service</text>
-        <text x="880" y="422" className="diagram-text" textAnchor="middle">127.0.0.1 target</text>
-        <text x="880" y="442" className="diagram-text" textAnchor="middle">SSH, API, web, DB</text>
+        <rect x="1216" y="548" width="96" height="142" rx="16" className="diagram-service" />
+        <text x="1264" y="586" className="diagram-chip-text" textAnchor="middle">Localhost</text>
+        <text x="1264" y="612" className="diagram-chip-text" textAnchor="middle">service</text>
+        <text x="1264" y="638" className="diagram-text" textAnchor="middle">127.0.0.1</text>
+        <text x="1264" y="662" className="diagram-text" textAnchor="middle">SSH API</text>
 
-        <path d="M260 410H450" className="diagram-path" markerEnd="url(#hidden-arrow)" />
-        <path d="M522 410H566" className="diagram-path" markerEnd="url(#hidden-arrow)" />
-        <path d="M794 410H804" className="diagram-path" markerEnd="url(#hidden-arrow)" />
+        <path d="M276 632H500" className="diagram-path" markerEnd="url(#hidden-arrow)" />
+        <path d="M714 620H900" className="diagram-path" markerEnd="url(#hidden-arrow)" />
+        <path d="M1164 632H1210" className="diagram-path" markerEnd="url(#hidden-arrow)" />
 
-        <rect x="178" y="492" width="620" height="42" rx="12" className="diagram-chip" />
-        <text x="488" y="518" className="diagram-chip-text" textAnchor="middle">
-          Intro handles setup. X joins the stream. The owner finally forwards into the real localhost service.
+        <path d="M92 612C92 556 120 520 160 504" className="diagram-path-soft" />
+        <path d="M182 612V500" className="diagram-path-soft" />
+        <path d="M272 612C272 556 244 520 204 504" className="diagram-path-soft" />
+        <path d="M964 612C964 556 992 520 1032 504" className="diagram-path-soft" />
+        <path d="M1054 612V500" className="diagram-path-soft" />
+        <path d="M1144 612C1144 556 1116 520 1076 504" className="diagram-path-soft" />
+
+        <rect x="392" y="706" width="556" height="34" rx="12" className="diagram-chip" />
+        <text x="670" y="728" className="diagram-chip-text" textAnchor="middle">
+          One intro is for setup only. Traffic later moves through 3 client relays, X, 3 owner relays, then the real localhost target.
         </text>
       </svg>
     </DiagramFrame>
