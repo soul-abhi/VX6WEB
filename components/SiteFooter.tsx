@@ -7,7 +7,6 @@ export default function SiteFooter() {
         <div className="footer-inner">
           <div className="footer-credit">
             <p>VX6 is an IPv6-first peer-to-peer service network for localhost sharing, private routing, and direct service access.</p>
-            <p>Use this footer area for your public contact address, GitHub organization, and release links.</p>
           </div>
           <ul className="footer-links" role="list">
             <li>
@@ -35,8 +34,13 @@ export default function SiteFooter() {
               <Link href="/sponsor">Sponsor</Link>
             </li>
             <li>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/ethical-buddy" target="_blank" rel="noopener noreferrer">
                 GitHub
+              </a>
+            </li>
+            <li>
+              <a href="mailto:suryanshdeshwal@gmail.com">
+                Email
               </a>
             </li>
           </ul>

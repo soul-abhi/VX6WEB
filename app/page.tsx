@@ -10,7 +10,9 @@ import SiteFooter from '@/components/SiteFooter';
 import SiteHeader from '@/components/SiteHeader';
 
 export const metadata: Metadata = {
-  title: 'Home',
+  title: {
+    absolute: 'VX6',
+  },
   description:
     'VX6 is an IPv6-first peer-to-peer service network for localhost sharing, hidden aliases, relay routing, direct IPv6 access, and decentralized team infrastructure.',
   alternates: {

@@ -12,22 +12,10 @@ export const metadata: Metadata = {
 
 const sponsorCompanies = [
   {
-    name: 'Company slot one',
-    github: '@company',
-    website: 'company.example',
-    body: 'Use this slot for a logo, GitHub organization, a short description, and one line about how the company supports VX6.',
-  },
-  {
-    name: 'Company slot two',
-    github: '@company',
-    website: 'company.example',
-    body: 'Good for infrastructure partners, test-network sponsors, relay operators, or companies building products on top of VX6.',
-  },
-  {
-    name: 'Company slot three',
-    github: '@company',
-    website: 'company.example',
-    body: 'Keep the card small and factual: name, logo, site, GitHub, and what part of the project they help strengthen.',
+    name: 'HACKITISE LAB Pvt. Ltd.',
+    website: 'https://hackitiselabs.in/',
+    email: 'connect@hackitiselabs.in',
+    body: 'Technology partner supporting secure engineering, product delivery, and infrastructure collaboration for modern decentralized platforms.',
   },
 ];
 
@@ -93,8 +81,10 @@ export default function SponsorPage() {
                         <h3>{company.name}</h3>
                         <p>{company.body}</p>
                         <div className="company-links">
-                          <span>{company.github}</span>
-                          <span>{company.website}</span>
+                          <a href={company.website} target="_blank" rel="noopener noreferrer">
+                            {company.website}
+                          </a>
+                          <a href={`mailto:${company.email}`}>{company.email}</a>
                         </div>
                       </div>
                     </article>

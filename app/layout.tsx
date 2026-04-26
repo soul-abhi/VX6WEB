@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import '@/app/globals.css';
+import vx6Logo from '@/assets/logo.png';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://vx6.tech'),
@@ -24,6 +25,11 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: '/',
+  },
+  icons: {
+    icon: vx6Logo.src,
+    shortcut: vx6Logo.src,
+    apple: vx6Logo.src,
   },
   openGraph: {
     title: 'VX6 | IPv6 peer-to-peer service network',
