@@ -55,10 +55,16 @@ export default function DownloadPage() {
 
               <div className="doc-main">
                 <section>
-                  <h2>Build from source</h2>
+                  <h2>Clone and install</h2>
                   <pre className="code-block">
-                    <code>go build -o ./vx6 ./cmd/vx6</code>
+                    <code>{`git clone https://github.com/ethical-buddy/VX6
+cd VX6
+sudo make install`}</code>
                   </pre>
+                  <p>
+                    <code>make install</code> builds the binary and installs the user systemd unit so the
+                    node can be started cleanly in the background.
+                  </p>
                 </section>
 
                 <section>
@@ -79,7 +85,9 @@ export default function DownloadPage() {
                 <section>
                   <h2>Start the runtime</h2>
                   <pre className="code-block">
-                    <code>./vx6 node</code>
+                    <code>{`vx6 node
+# or run it as a service
+systemctl --user enable --now vx6`}</code>
                   </pre>
                 </section>
 
@@ -93,6 +101,21 @@ systemctl --user reload vx6`}</code>
                   <p>
                     This keeps the node in the background and makes reloads easy when services or config
                     change.
+                  </p>
+                </section>
+
+                <section>
+                  <h2>Join the global VX6 network</h2>
+                  <pre className="code-block">
+                    <code>{`vx6 init \\
+  --name alice \\
+  --listen '[::]:4242' \\
+  --advertise '[your-ipv6]:4242' \\
+  --bootstrap '[YOUR_PUBLIC_VX6_NODE_1]:4242'`}</code>
+                  </pre>
+                  <p>
+                    We are also building a global VX6 network. Join it through one of the public VX6
+                    entry nodes. Keep this section updated with your current live node IPs and mirrors.
                   </p>
                 </section>
 

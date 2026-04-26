@@ -252,6 +252,14 @@ export default function HomePage() {
                   <span className="panel-tag">Editable block</span>
                 </div>
                 <div className="board-list">
+                  <div className="board-item">
+                    <strong>Join the global network</strong>
+                    <p>
+                      Bootstrap from: <code>[YOUR_PUBLIC_VX6_NODE_1]:4242</code>,{' '}
+                      <code>[YOUR_PUBLIC_VX6_NODE_2]:4242</code>. Keep this block updated with current live
+                      entry nodes and mirrors.
+                    </p>
+                  </div>
                   {networkBoard.map((item) => (
                     <div key={item.label} className="board-item">
                       <strong>{item.label}</strong>
@@ -436,6 +444,10 @@ ssh -p 2222 user@127.0.0.1`}</code>
             <p className="section-lead">
               If you want to test VX6, build on it, run peers, write docs, improve the protocol, or
               help shape the public network, this is the right time to join.
+            </p>
+            <p className="section-lead">
+              We are also building a global VX6 network. Join it from our public VX6 entry node IPs and
+              keep watching this page for updated live endpoints.
             </p>
             <div className="quick-link-row">
               <Link href="/sponsor" className="hero-cta hero-cta-primary">
