@@ -35,12 +35,12 @@ export default function SiteFooter() {
             </li>
             <li>
               <a href="https://github.com/ethical-buddy" target="_blank" rel="noopener noreferrer">
-                GitHub
+                @Ethical-buddy
               </a>
             </li>
             <li>
               <a href="mailto:suryanshdeshwal@gmail.com">
-                Email
+                Suryanshdeshwal@gmail.com
               </a>
             </li>
           </ul>
