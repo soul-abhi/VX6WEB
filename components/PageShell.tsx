@@ -11,7 +11,10 @@ type NavKey =
   | 'decentralization'
   | 'who-uses-vx6'
   | 'sponsor'
-  | 'future';
+  | 'future'
+  | 'docs'
+  | 'contributing'
+  | 'code-of-conduct';
 
 type PageShellProps = {
   currentPage: NavKey;

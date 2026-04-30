@@ -13,7 +13,10 @@ type NavKey =
   | 'decentralization'
   | 'who-uses-vx6'
   | 'sponsor'
-  | 'future';
+  | 'future'
+  | 'docs'
+  | 'contributing'
+  | 'code-of-conduct';
 
 type SiteHeaderProps = {
   currentPage: NavKey;
@@ -73,6 +76,23 @@ export default function SiteHeader({ currentPage }: SiteHeaderProps) {
           </Link>
         </nav>
         <div className="hero-nav-toggle">
+          <div className="nav-meta-links" aria-label="Project resources">
+            {/* <Link href="/docs" className={currentPage === 'docs' ? 'active' : ''}>
+              Docs
+            </Link> */}
+            <Link
+              href="/contributing"
+              className={currentPage === 'contributing' ? 'active' : ''}
+            >
+              Contribute
+            </Link>
+            <Link
+              href="/code-of-conduct"
+              className={currentPage === 'code-of-conduct' ? 'active' : ''}
+            >
+              Conduct
+            </Link>
+          </div>
           <LandingThemeToggle />
           <a
             href="https://github.com/ethical-buddy/VX6"

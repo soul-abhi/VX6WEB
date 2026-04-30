@@ -234,6 +234,28 @@ code {
   gap: 0.65rem;
 }
 
+.nav-meta-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.nav-meta-links a {
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.nav-meta-links a:hover,
+.nav-meta-links a.active {
+  color: var(--text);
+  background: var(--bg-soft);
+  border-color: var(--line);
+  text-decoration: none;
+}
+
 .theme-toggle-btn,
 .sponsor-nav-button,
 .github-button,
@@ -670,6 +692,7 @@ table.spec td:first-child {
 .home-mini-grid,
 .home-rail-grid,
 .feature-grid,
+.doc-card-grid,
 .audience-grid,
 .quickstart-grid,
 .dual-case-grid {
@@ -880,6 +903,10 @@ table.spec td:first-child {
 
 .feature-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.doc-card-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .dual-case-grid {
@@ -1285,6 +1312,7 @@ table.spec td:first-child {
 
   .home-mini-grid,
   .feature-grid,
+  .doc-card-grid,
   .audience-grid,
   .quickstart-grid,
   .home-rail-grid,
@@ -1324,6 +1352,7 @@ table.spec td:first-child {
 
   .home-mini-grid,
   .feature-grid,
+  .doc-card-grid,
   .audience-grid,
   .quickstart-grid,
   .home-rail-grid,

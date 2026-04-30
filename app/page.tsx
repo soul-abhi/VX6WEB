@@ -82,6 +82,27 @@ const blogItems = [
   },
 ];
 
+const communityLinks = [
+  {
+    title: 'Contribution guidelines',
+    body: 'How to propose changes, follow coding standards, and submit PRs with confidence.',
+    href: '/contributing',
+    cta: 'Read contributing',
+  },
+  {
+    title: 'Code of conduct',
+    body: 'Shared expectations for healthy collaboration and a respectful community.',
+    href: '/code-of-conduct',
+    cta: 'Read conduct',
+  },
+  {
+    title: 'External interface docs',
+    body: 'Inputs, outputs, and interaction points for VX6 web experience and integrations.',
+    href: '/docs',
+    cta: 'Open docs',
+  },
+];
+
 const maintainerNodeEndpoint = '[2600:1f18:4d5b:dc00:a26f:655c:58fd:4a51]:4242';
 
 const networkBoard = [
@@ -414,6 +435,28 @@ export default function HomePage() {
 ssh -p 2222 user@127.0.0.1`}</code>
               </pre>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="home-section community-section" aria-labelledby="community-title">
+        <div className="wrapper">
+          <p className="eyebrow">Community & docs</p>
+          <h2 id="community-title" className="section-title">
+            Build, review, and collaborate
+          </h2>
+          <p className="section-lead">
+            Everything needed to contribute, stay aligned with community expectations, and understand
+            VX6 web interaction surfaces.
+          </p>
+          <div className="feature-grid community-grid" role="list">
+            {communityLinks.map((item) => (
+              <article key={item.title} className="feature-card" role="listitem">
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+                <Link href={item.href}>{item.cta}</Link>
+              </article>
+            ))}
           </div>
         </div>
       </section>
