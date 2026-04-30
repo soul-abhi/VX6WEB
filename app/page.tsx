@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     absolute: 'VX6',
   },
   description:
-    'VX6 is an IPv6-first peer-to-peer service network for localhost sharing, hidden aliases, relay routing, direct IPv6 access, and decentralized team infrastructure.',
+    'VX6 is an IPv6-first peer-to-peer service network for localhost sharing, hidden aliases, relay routing, direct IPv6 access, and decentralized team infrastructure across Linux and Windows.',
   alternates: {
     canonical: '/',
   },
@@ -42,8 +42,8 @@ const featureCards = [
     body: 'VX6 is built for services people really use: admin panels, internal APIs, team tooling, chat, media workers, and distributed control planes.',
   },
   {
-    title: 'Linux-ready operations',
-    body: 'Run it interactively or through systemd, keep files in standard Linux paths, and treat the network like production infrastructure.',
+    title: 'Linux and Windows support',
+    body: 'Linux is the source-of-truth release branch, and Windows support is available through the Windows-compatible branch with the same current protocol and feature behavior.',
   },
 ];
 
@@ -125,7 +125,7 @@ export default function HomePage() {
     '@type': 'SoftwareApplication',
     name: 'VX6',
     applicationCategory: 'NetworkingApplication',
-    operatingSystem: 'Linux',
+    operatingSystem: 'Linux, Windows',
     description:
       'VX6 is an IPv6-first peer-to-peer service network for localhost sharing, hidden aliases, direct IPv6 access, and decentralized team infrastructure.',
     url: 'https://vx6.tech',
@@ -168,6 +168,11 @@ export default function HomePage() {
               and hidden routing, it is designed to feel much faster than traditional relay-heavy or
               tunnel-heavy approaches.
             </p>
+            <p className="hero-description">
+              Platform support available now: Linux on the main branch, Windows through the
+              Windows-compatible branch. Both are kept aligned on the current VX6 protocol and feature
+              set.
+            </p>
             <div className="hero-cta-row" aria-label="Main actions">
               <Link href="/download" className="hero-cta hero-cta-primary">
                 Download VX6
@@ -192,6 +197,10 @@ export default function HomePage() {
               <div className="mini-stat-card">
                 <strong>Private by design</strong>
                 <span>The localhost app stays local, the service stays named, and public port exposure stays low.</span>
+              </div>
+              <div className="mini-stat-card">
+                <strong>Browser wrapper coming soon</strong>
+                <span>The current GUI already works as a local web front-end, and a broader browser wrapper experience is planned next.</span>
               </div>
             </div>
 

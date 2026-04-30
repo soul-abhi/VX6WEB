@@ -5,7 +5,7 @@ import PageShell from '@/components/PageShell';
 export const metadata: Metadata = {
   title: 'Technical',
   description:
-    'Technical working of VX6: identity, DHT-backed discovery, local registry, direct service flow, hidden aliases, relay paths, and Linux eBPF performance.',
+    'Technical working of VX6: identity, DHT-backed discovery, local registry, direct service flow, hidden aliases, relay paths, and Linux/Windows runtime behavior.',
   alternates: {
     canonical: '/technical',
   },
@@ -39,6 +39,9 @@ export default function TechnicalPage() {
                     </li>
                     <li>
                       <a href="#ebpf">eBPF and performance</a>
+                    </li>
+                    <li>
+                      <a href="#platforms">Platforms</a>
                     </li>
                   </ol>
                 </div>
@@ -210,18 +213,33 @@ target node forwards traffic to the real localhost target`}</code>
                 <section id="ebpf">
                   <h2>eBPF and performance</h2>
                   <p>
-                    On Linux, VX6 uses eBPF as the fast path for traffic classification and relay-side
-                    networking decisions. That lets the control plane stay readable in Go while hot
-                    networking work moves closer to the kernel.
+                    On Linux, VX6 includes experimental eBPF/XDP work for traffic classification and
+                    relay-side networking decisions. That lets the control plane stay readable in Go while
+                    hot networking work can move closer to the kernel.
                   </p>
                   <ul>
                     <li>VX6 traffic can be identified early.</li>
                     <li>Busy relay nodes can keep their hot path lightweight.</li>
                     <li>Kernel-side logic reduces extra work on the relay path.</li>
-                    <li>The result is a cleaner fit for service traffic and peer networking at scale.</li>
+                    <li>The current release still treats this path as experimental rather than a proven production fast path.</li>
                   </ul>
 
                   <ServiceStackDiagram />
+                </section>
+
+                <section id="platforms">
+                  <h2>Linux and Windows support</h2>
+                  <p>
+                    VX6 is currently maintained with Linux as the source-of-truth branch and a separate
+                    Windows-compatible branch for Windows builds. The protocol, DHT behavior, hidden
+                    services, and relay logic are intended to stay aligned between them.
+                  </p>
+                  <ul>
+                    <li>Linux is the main branch for protocol and release work.</li>
+                    <li>Windows support is available for current builds through the Windows-compatible branch.</li>
+                    <li>Both are currently TCP-only.</li>
+                    <li>Linux-only features such as systemd and eBPF management do not become native Windows features automatically.</li>
+                  </ul>
                 </section>
               </div>
             </div>

@@ -54,6 +54,12 @@ export default function SponsorPage() {
                   documentation, and ecosystem sponsors who want to help grow a public peer-to-peer
                   service network and the apps built on top of it.
                 </div>
+
+                <div className="note">
+                  <strong>Project sponsor credit:</strong> HackitiseLabs Pvt. Ltd. and Dailker are
+                  currently highlighted alongside the project in the release documentation and public
+                  project material.
+                </div>
               </section>
 
               <aside className="sponsor-panel sponsor-side">
@@ -85,6 +91,10 @@ export default function SponsorPage() {
                   <p>
                     Sponsorship can cover public nodes, relay testing, documentation, and the builder
                     ecosystem around VX6.
+                  </p>
+                  <p>
+                    Maintainer and sponsor references currently highlight Dailker through GitHub alongside
+                    the HackitiseLabs support line used across project materials.
                   </p>
                 </div>
 

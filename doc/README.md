@@ -25,3 +25,12 @@ Writing rules used here:
 - human
 - SEO-friendly
 - accurate to the current VX6 model
+
+Current release assumptions:
+
+- Linux support is published through the `main` branch
+- Windows support is published through the `Windows-compatible` branch
+- both branches follow the same current protocol and feature behavior
+- current transport is TCP-only
+- `vx6-gui` exists now
+- broader browser-wrapper work is still upcoming

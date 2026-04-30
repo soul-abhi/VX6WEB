@@ -4,7 +4,7 @@ import PageShell from '@/components/PageShell';
 export const metadata: Metadata = {
   title: 'Download',
   description:
-    'Build and install VX6, initialize a node, run it with systemd, and understand the default file locations on Linux.',
+    'Build and install VX6 for Linux or Windows, initialize a node, and understand the current release paths and platform branches.',
   alternates: {
     canonical: '/download',
   },
@@ -27,7 +27,7 @@ export default function DownloadPage() {
                     <tbody>
                       <tr>
                         <td>OS</td>
-                        <td>Linux</td>
+                        <td>Linux and Windows</td>
                       </tr>
                       <tr>
                         <td>Network</td>
@@ -35,7 +35,7 @@ export default function DownloadPage() {
                       </tr>
                       <tr>
                         <td>Build</td>
-                        <td>Go toolchain</td>
+                        <td>Go toolchain or release binary</td>
                       </tr>
                     </tbody>
                   </table>
@@ -50,10 +50,19 @@ export default function DownloadPage() {
 ~/.local/share/vx6
 ~/Downloads`}</code>
                   </pre>
+                  <p>Linux uses the paths above. Windows uses its normal user config and cache directories.</p>
                 </div>
               </aside>
 
               <div className="doc-main">
+                <section>
+                  <h2>Choose your branch</h2>
+                  <ul>
+                    <li><strong>main</strong>: Linux-first branch</li>
+                    <li><strong>Windows-compatible</strong>: Windows build branch with the same current VX6 protocol and feature behavior</li>
+                  </ul>
+                </section>
+
                 <section>
                   <h2>Clone and install</h2>
                   <pre className="code-block">
@@ -64,6 +73,18 @@ sudo make install`}</code>
                   <p>
                     <code>make install</code> builds the binary and installs the user systemd unit so the
                     node can be started cleanly in the background.
+                  </p>
+                </section>
+
+                <section>
+                  <h2>Windows build</h2>
+                  <pre className="code-block">
+                    <code>{`go build -o vx6.exe ./cmd/vx6
+go build -o vx6-gui.exe ./cmd/vx6-gui`}</code>
+                  </pre>
+                  <p>
+                    Build Windows binaries from the <code>Windows-compatible</code> branch. That branch is
+                    intended to stay aligned with the current VX6 protocol and feature set.
                   </p>
                 </section>
 
@@ -127,6 +148,14 @@ systemctl --user reload vx6`}</code>
                     <li>A service network that can grow from any known live node.</li>
                     <li>Direct, relay, hidden, and raw IPv6 access modes.</li>
                   </ul>
+                </section>
+
+                <section>
+                  <h2>Browser wrapper</h2>
+                  <p>
+                    The current release already includes <code>vx6-gui</code> as a local web front-end.
+                    A broader browser-wrapper experience is coming soon.
+                  </p>
                 </section>
               </div>
             </div>

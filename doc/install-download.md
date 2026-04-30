@@ -1,15 +1,33 @@
 # Install or Download
 
-Suggested title: Download VX6 | Install on Linux and Start a Peer-to-Peer Node
+Suggested title: Download VX6 | Build for Linux or Windows and Start a Node
 
-Suggested meta description: Download or build VX6, install it on Linux, run it as a background service, and start sharing services over an IPv6 peer-to-peer network.
+Suggested meta description: Download or build VX6 for Linux or Windows, initialize a node, and start sharing localhost services over the current VX6 peer-to-peer network.
 
-## Fast Path
+## Choose Your Branch
 
-Build VX6:
+- `main` for the Linux-first release branch
+- `Windows-compatible` for Windows builds with the same current protocol and feature set
+
+## Linux Fast Path
+
+```bash
+make build
+sudo make install
+```
+
+Or build directly:
 
 ```bash
 go build -o ./vx6 ./cmd/vx6
+go build -o ./vx6-gui ./cmd/vx6-gui
+```
+
+## Windows Fast Path
+
+```powershell
+go build -o vx6.exe ./cmd/vx6
+go build -o vx6-gui.exe ./cmd/vx6-gui
 ```
 
 ## Initialize
@@ -28,20 +46,17 @@ go build -o ./vx6 ./cmd/vx6
 ./vx6 node
 ```
 
-## Run in Background
+## Background Runtime on Linux
 
 ```bash
 systemctl --user enable --now vx6
 systemctl --user status vx6
-```
-
-Reload after service or config changes:
-
-```bash
 systemctl --user reload vx6
 ```
 
 ## Default Paths
+
+Linux defaults:
 
 ```text
 ~/.config/vx6/config.json
@@ -51,15 +66,17 @@ systemctl --user reload vx6
 ~/Downloads
 ```
 
+Windows uses its normal user config and cache directories.
+
 ## What You Need
 
-- Linux
+- Linux or Windows
 - IPv6 reachability
 - Go toolchain if building from source
 
 ## Download Page Copy
 
-VX6 is made for people who want direct service access with a cleaner network model.  
+VX6 is made for people who want direct service access with a cleaner network model.
 Install it, start a node, publish a service, and use it from another machine in minutes.
 
-You can start from your own node, a team node, or any known live VX6 node that already sees the network.
+The current release is TCP-only, includes the local `vx6-gui` web front-end, and keeps the broader browser-wrapper idea as upcoming work.

@@ -114,8 +114,9 @@ export default function FuturePage() {
                 <article className="feature-card">
                   <h3>Browser wrapper</h3>
                   <p>
-                    A browser-based wrapper can make VX6 services feel even more immediate by exposing a
-                    cleaner GUI for discovery, service access, hidden aliases, and peer-managed apps.
+                    A broader browser-based wrapper is coming soon. The current release already includes
+                    <code> vx6-gui </code> as a local web front-end, and the next step is a cleaner wrapper
+                    experience for discovery, service access, hidden aliases, and peer-managed apps.
                   </p>
                 </article>
               </div>
