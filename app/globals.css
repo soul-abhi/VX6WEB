@@ -793,9 +793,14 @@ table.spec td:first-child {
 
 .notice-board {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 22%, var(--bg-elevated) 78%), var(--bg-soft)),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--accent-soft) 22%, var(--bg-elevated) 78%),
+      var(--bg-soft)
+    ),
     var(--bg-soft);
-  border: 1px solid color-mix(in srgb, var(--line-strong) 72%, var(--accent) 28%);
+  border: 1px solid
+    color-mix(in srgb, var(--line-strong) 72%, var(--accent) 28%);
 }
 
 .notice-board-head {
@@ -841,7 +846,11 @@ table.spec td:first-child {
   margin-bottom: 1rem;
   border: 1px solid var(--line);
   border-radius: 0.95rem;
-  background: color-mix(in srgb, var(--bg-elevated) 82%, var(--accent-soft) 18%);
+  background: color-mix(
+    in srgb,
+    var(--bg-elevated) 82%,
+    var(--accent-soft) 18%
+  );
 }
 
 .maintainer-connect-card strong {
