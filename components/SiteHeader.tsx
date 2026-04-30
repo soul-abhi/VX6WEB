@@ -66,7 +66,7 @@ export default function SiteHeader({ currentPage }: SiteHeaderProps) {
             Who Uses VX6
           </Link>
           <Link href="/sponsor" id="nav-sponsor" className={currentPage === 'sponsor' ? 'active' : ''}>
-            Sponsor
+            Sponsors
           </Link>
           <Link href="/future" id="nav-future" className={currentPage === 'future' ? 'active' : ''}>
             Future

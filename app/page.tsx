@@ -68,61 +68,26 @@ const audienceCards = [
 const projectItems = [
   {
     name: 'VX6 Chat',
-    status: 'working app',
-    body: 'Peer messaging and group rooms on top of VX6 naming and localhost services.',
-  },
-  {
-    name: 'Peer review room',
-    status: 'reference idea',
-    body: 'Video, screen share, and local media workers connected directly through VX6 routes.',
-  },
-  {
-    name: 'CTF control plane',
-    status: 'reference idea',
-    body: 'Scoreboards, challenge hosts, and admin APIs kept on local nodes and reachable by team name.',
-  },
-  {
-    name: 'Distributed build mesh',
-    status: 'reference idea',
-    body: 'Controllers, workers, and dashboards connected through direct IPv6 or hidden service names.',
-  },
-  {
-    name: 'Private video room',
-    status: 'reference idea',
-    body: 'Small-group video and screen-share apps with peer-first routing and local media workers.',
+    status: 'github',
+    href: 'https://github.com/ethical-buddy/VX6-chat.git',
+    body: 'https://github.com/ethical-buddy/VX6-chat.git',
   },
 ];
 
 const blogItems = [
   {
-    title: 'Why VX6 feels simple',
-    href: '/description',
-    body: 'What localhost to localhost really means when you just want tools to work.',
-  },
-  {
-    title: 'How teams use VX6',
-    href: '/who-uses-vx6',
-    body: 'A short map of engineering, CTF, and infrastructure use cases.',
-  },
-  {
-    title: 'How hidden routing works',
-    href: '/technical',
-    body: 'Intro nodes, guards, rendezvous, and relay paths in plain language.',
+    title: 'Why VX6 feels so simple',
+    href: 'https://medium.com/@suryanshdeshwal/why-vx6-feels-so-simple-dabbd0308e06',
+    body: 'https://medium.com/@suryanshdeshwal/why-vx6-feels-so-simple-dabbd0308e06',
   },
 ];
 
+const maintainerNodeEndpoint = '[2600:1f18:4d5b:dc00:a26f:655c:58fd:4a51]:4242';
+
 const networkBoard = [
   {
-    label: 'Creator teams',
-    value: 'Add your core team, public maintainers, relay operators, and trusted builders here.',
-  },
-  {
-    label: 'Public peers',
-    value: 'Add known live entry nodes, mirrors, regional peer endpoints, and public network status here.',
-  },
-  {
-    label: 'Endorsed services',
-    value: 'List stable aliases, endorsed apps, collaboration tools, and trusted team services here.',
+    label: 'Bootstrap entry',
+    value: 'Use the maintainer node as the first live VX6 entry point for the current public network.',
   },
 ];
 
@@ -218,16 +183,21 @@ export default function HomePage() {
             <HeroMeshDiagram />
 
             <div className="home-rail-grid">
-              <aside className="home-rail-card scroll-panel" aria-labelledby="projects-title">
-                <div className="panel-head">
+              <aside className="home-rail-card scroll-panel notice-board compact-board" aria-labelledby="projects-title">
+                <div className="panel-head notice-board-head">
                   <h2 id="projects-title">Projects on VX6</h2>
-                  <span className="panel-tag">Scrollable</span>
+                  <span className="panel-tag">Notice board</span>
                 </div>
-                <div className="scroll-panel-body">
+                <p className="notice-board-copy">
+                  Current public project and writing.
+                </p>
+                <div className="scroll-panel-body notice-board-body">
                   {projectItems.map((item) => (
                     <article key={item.name} className="rail-item">
                       <div className="rail-item-head">
-                        <strong>{item.name}</strong>
+                        <a href={item.href} target="_blank" rel="noopener noreferrer">
+                          {item.name}
+                        </a>
                         <span>{item.status}</span>
                       </div>
                       <p>{item.body}</p>
@@ -239,7 +209,9 @@ export default function HomePage() {
                   {blogItems.map((item) => (
                     <article key={item.title} className="rail-item">
                       <div className="rail-item-head">
-                        <Link href={item.href}>{item.title}</Link>
+                        <a href={item.href} target="_blank" rel="noopener noreferrer">
+                          {item.title}
+                        </a>
                         <span>blog</span>
                       </div>
                       <p>{item.body}</p>
@@ -248,18 +220,26 @@ export default function HomePage() {
                 </div>
               </aside>
 
-              <aside className="home-rail-card" aria-labelledby="network-board-title">
-                <div className="panel-head">
+              <aside className="home-rail-card notice-board compact-board" aria-labelledby="network-board-title">
+                <div className="panel-head notice-board-head">
                   <h2 id="network-board-title">Network board</h2>
-                  <span className="panel-tag">Editable block</span>
+                  <span className="panel-tag">Maintainer notice</span>
+                </div>
+                <p className="notice-board-copy">
+                  Current public entry information.
+                </p>
+                <div className="maintainer-connect-card">
+                  <strong>Maintainer node IPs</strong>
+                  <p>Use this node first.</p>
+                  <div className="maintainer-connect-codes">
+                    <code>{maintainerNodeEndpoint}</code>
+                  </div>
                 </div>
                 <div className="board-list">
                   <div className="board-item">
                     <strong>Join the global network</strong>
                     <p>
-                      Bootstrap from: <code>[YOUR_PUBLIC_VX6_NODE_1]:4242</code>,{' '}
-                      <code>[YOUR_PUBLIC_VX6_NODE_2]:4242</code>. Keep this block updated with current live
-                      entry nodes and mirrors.
+                      Bootstrap from: <code>{maintainerNodeEndpoint}</code>.
                     </p>
                   </div>
                   {networkBoard.map((item) => (
@@ -358,7 +338,7 @@ export default function HomePage() {
                 Share SSH, a dashboard, a local web app, a game service, or a private admin tool with a
                 friend without making that app a public internet endpoint.
               </p>
-              <Link href="/who-uses-vx6/individuals">See individual use cases</Link>
+              <Link href="/who-uses-vx6#individuals">See individual use cases</Link>
             </article>
             <article className="feature-card">
               <h3>Organizational use</h3>
@@ -366,7 +346,7 @@ export default function HomePage() {
                 Build secure internal networks for self-hosted services, private collaboration apps, and
                 team infrastructure while keeping the data in your own hands and reducing hosting cost.
               </p>
-              <Link href="/who-uses-vx6/organizations">See organizational use cases</Link>
+              <Link href="/who-uses-vx6#organizations">See organizational use cases</Link>
             </article>
           </div>
 

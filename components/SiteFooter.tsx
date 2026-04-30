@@ -7,6 +7,12 @@ export default function SiteFooter() {
         <div className="footer-inner">
           <div className="footer-credit">
             <p>VX6 is an IPv6-first peer-to-peer service network for localhost sharing, private routing, and direct service access.</p>
+            <div className="footer-contact-stack" aria-label="Project contact links">
+              <a href="mailto:suryanshdeshwal@gmail.com">suryanshdeshwal@gmail.com</a>
+              <a href="https://github.com/ethical-buddy" target="_blank" rel="noopener noreferrer">
+                github.com/ethical-buddy
+              </a>
+            </div>
           </div>
           <ul className="footer-links" role="list">
             <li>
@@ -31,17 +37,7 @@ export default function SiteFooter() {
               <Link href="/who-uses-vx6">Who Uses VX6</Link>
             </li>
             <li>
-              <Link href="/sponsor">Sponsor</Link>
-            </li>
-            <li>
-              <a href="https://github.com/ethical-buddy" target="_blank" rel="noopener noreferrer">
-                @Ethical-buddy
-              </a>
-            </li>
-            <li>
-              <a href="mailto:suryanshdeshwal@gmail.com">
-                Suryanshdeshwal@gmail.com
-              </a>
+              <Link href="/sponsor">Sponsors</Link>
             </li>
           </ul>
         </div>

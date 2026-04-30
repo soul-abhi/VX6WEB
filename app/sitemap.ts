@@ -11,8 +11,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/technical',
     '/decentralization',
     '/who-uses-vx6',
-    '/who-uses-vx6/individuals',
-    '/who-uses-vx6/organizations',
     '/sponsor',
     '/future',
   ];
