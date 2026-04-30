@@ -2,11 +2,18 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
+import { pageview } from '@/lib/gtag';
 
 export default function ClientEnhancements() {
   const pathname = usePathname();
 
   useEffect(() => {
+    // Send a GA pageview for SPA route changes
+    try {
+      pageview(pathname || window.location.pathname);
+    } catch (_) {
+      // ignore errors in environments without window or gtag
+    }
     const revealElements = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
     let observer: IntersectionObserver | null = null;
 
