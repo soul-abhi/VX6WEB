@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import '@/app/globals.css';
+import './globals.css';
 import vx6Logo from '@/assets/logo.png';
 
 export const metadata: Metadata = {
