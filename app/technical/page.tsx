@@ -48,18 +48,20 @@ export default function TechnicalPage() {
 
                 <div className="page-side-box">
                   <h3>Profiles</h3>
-                  <table className="spec">
-                    <tbody>
-                      <tr>
-                        <td>fast</td>
-                        <td>3 + X + 3</td>
-                      </tr>
-                      <tr>
-                        <td>balanced</td>
-                        <td>5 + X + 5</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div className="table-scroll">
+                    <table className="spec">
+                      <tbody>
+                        <tr>
+                          <td>fast</td>
+                          <td>3 + X + 3</td>
+                        </tr>
+                        <tr>
+                          <td>balanced</td>
+                          <td>5 + X + 5</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </aside>
 
@@ -71,26 +73,28 @@ export default function TechnicalPage() {
                     being local. The app stays on localhost. VX6 handles discovery, naming, sessions,
                     routing, and transport between peers.
                   </p>
-                  <table className="spec">
-                    <tbody>
-                      <tr>
-                        <td>Service target</td>
-                        <td>localhost addresses such as 127.0.0.1:22, :8080, or :5432</td>
-                      </tr>
-                      <tr>
-                        <td>Client view</td>
-                        <td>a new local forwarded port on the client side</td>
-                      </tr>
-                      <tr>
-                        <td>Naming</td>
-                        <td>username.service or hidden alias</td>
-                      </tr>
-                      <tr>
-                        <td>Discovery</td>
-                        <td>peer sync plus DHT-backed lookups</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div className="table-scroll">
+                    <table className="spec">
+                      <tbody>
+                        <tr>
+                          <td>Service target</td>
+                          <td>localhost addresses such as 127.0.0.1:22, :8080, or :5432</td>
+                        </tr>
+                        <tr>
+                          <td>Client view</td>
+                          <td>a new local forwarded port on the client side</td>
+                        </tr>
+                        <tr>
+                          <td>Naming</td>
+                          <td>username.service or hidden alias</td>
+                        </tr>
+                        <tr>
+                          <td>Discovery</td>
+                          <td>peer sync plus DHT-backed lookups</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </section>
 
                 <section id="identity">
@@ -146,37 +150,39 @@ target node forwards traffic to the real localhost target`}</code>
 
                   <HiddenFlowDiagram />
 
-                  <table className="wikitable">
-                    <thead>
-                      <tr>
-                        <th>Component</th>
-                        <th>Count</th>
-                        <th>Role</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Active intros</td>
-                        <td>3</td>
-                        <td>Primary hidden-service entry points.</td>
-                      </tr>
-                      <tr>
-                        <td>Standby intros</td>
-                        <td>2</td>
-                        <td>Backup entry points for resilience.</td>
-                      </tr>
-                      <tr>
-                        <td>Guard nodes</td>
-                        <td>2</td>
-                        <td>Owner-side signaling and route protection role.</td>
-                      </tr>
-                      <tr>
-                        <td>Rendezvous candidates</td>
-                        <td>3</td>
-                        <td>Candidate meeting points where streams can be joined.</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div className="table-scroll">
+                    <table className="wikitable">
+                      <thead>
+                        <tr>
+                          <th>Component</th>
+                          <th>Count</th>
+                          <th>Role</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Active intros</td>
+                          <td>3</td>
+                          <td>Primary hidden-service entry points.</td>
+                        </tr>
+                        <tr>
+                          <td>Standby intros</td>
+                          <td>2</td>
+                          <td>Backup entry points for resilience.</td>
+                        </tr>
+                        <tr>
+                          <td>Guard nodes</td>
+                          <td>2</td>
+                          <td>Owner-side signaling and route protection role.</td>
+                        </tr>
+                        <tr>
+                          <td>Rendezvous candidates</td>
+                          <td>3</td>
+                          <td>Candidate meeting points where streams can be joined.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
 
                   <ol className="doc-steps">
                     <li>

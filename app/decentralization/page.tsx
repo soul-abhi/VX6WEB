@@ -92,36 +92,38 @@ export default function DecentralizationPage() {
 
                 <section id="roles">
                   <h2>Equal-capability nodes</h2>
-                  <table className="wikitable">
-                    <thead>
-                      <tr>
-                        <th>Role</th>
-                        <th>What the node can do</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Service host</td>
-                        <td>Publishes and serves local applications.</td>
-                      </tr>
-                      <tr>
-                        <td>Relay node</td>
-                        <td>Forwards proxied or hidden traffic.</td>
-                      </tr>
-                      <tr>
-                        <td>Intro node</td>
-                        <td>Participates in hidden-service negotiation.</td>
-                      </tr>
-                      <tr>
-                        <td>Rendezvous node</td>
-                        <td>Acts as the meeting point for hidden routes.</td>
-                      </tr>
-                      <tr>
-                        <td>Normal peer</td>
-                        <td>Shares records, learns peers, and keeps the mesh healthy.</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div className="table-scroll">
+                    <table className="wikitable">
+                      <thead>
+                        <tr>
+                          <th>Role</th>
+                          <th>What the node can do</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Service host</td>
+                          <td>Publishes and serves local applications.</td>
+                        </tr>
+                        <tr>
+                          <td>Relay node</td>
+                          <td>Forwards proxied or hidden traffic.</td>
+                        </tr>
+                        <tr>
+                          <td>Intro node</td>
+                          <td>Participates in hidden-service negotiation.</td>
+                        </tr>
+                        <tr>
+                          <td>Rendezvous node</td>
+                          <td>Acts as the meeting point for hidden routes.</td>
+                        </tr>
+                        <tr>
+                          <td>Normal peer</td>
+                          <td>Shares records, learns peers, and keeps the mesh healthy.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </section>
 
                 <section id="services">

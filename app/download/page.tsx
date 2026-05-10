@@ -23,22 +23,24 @@ export default function DownloadPage() {
               <aside className="page-side">
                 <div className="page-side-box">
                   <h3>Requirements</h3>
-                  <table className="spec">
-                    <tbody>
-                      <tr>
-                        <td>OS</td>
-                        <td>Linux and Windows</td>
-                      </tr>
-                      <tr>
-                        <td>Network</td>
-                        <td>IPv6 reachability</td>
-                      </tr>
-                      <tr>
-                        <td>Build</td>
-                        <td>Go toolchain or release binary</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div className="table-scroll">
+                    <table className="spec">
+                      <tbody>
+                        <tr>
+                          <td>OS</td>
+                          <td>Linux and Windows</td>
+                        </tr>
+                        <tr>
+                          <td>Network</td>
+                          <td>IPv6 reachability</td>
+                        </tr>
+                        <tr>
+                          <td>Build</td>
+                          <td>Go toolchain or release binary</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
 
                 <div className="page-side-box">
