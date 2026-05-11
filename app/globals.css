@@ -346,6 +346,14 @@ code {
   transform: translateY(-1px);
 }
 
+.theme-toggle-icon {
+  flex-shrink: 0;
+}
+
+.theme-toggle-label {
+  margin-left: 0.5rem;
+}
+
 .sponsor-nav-button,
 .hero-cta-primary,
 .github-button {
