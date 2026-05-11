@@ -4,7 +4,7 @@ import { externalInterfaceSections } from '@/lib/docs-content';
 
 export const metadata: Metadata = {
   title: 'Documentation',
-  description: 'External interface documentation for VX6 web interactions and outputs.',
+  description: 'VX6 protocol, SDK, and operations documentation overview.',
   alternates: {
     canonical: '/docs',
   },
@@ -16,7 +16,7 @@ export default function DocumentationPage() {
       <main className="page-content">
         <div className="wrapper">
           <article className="article-shell">
-            <p className="article-meta">External interfaces</p>
+            <p className="article-meta">Protocol and product docs</p>
             <h1>Documentation</h1>
 
             <div className="doc-layout">

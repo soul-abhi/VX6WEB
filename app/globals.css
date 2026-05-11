@@ -1906,3 +1906,29 @@ table.spec td:first-child {
   padding: 10px 0 10px 16px;
   margin: 20px 0;
 }
+
+/* Product-focused home theme override */
+.landing-home.landing-product {
+  --accent: #0f7b6c;
+  --accent-soft: #d8f0eb;
+  --bg: #f7f7f5;
+  --bg-elevated: #fffefb;
+  --bg-soft: #eef1ed;
+  --line: #d7ddd6;
+  --text: #16201a;
+  --text-soft: #34463e;
+}
+
+.landing-home.landing-product .home-hero {
+  background:
+    radial-gradient(circle at 8% 22%, rgba(18, 122, 106, 0.09), transparent 36%),
+    radial-gradient(circle at 92% 80%, rgba(194, 155, 64, 0.12), transparent 40%);
+}
+
+.landing-home.landing-product .feature-card,
+.landing-home.landing-product .home-rail-card,
+.landing-home.landing-product .quickstart-card,
+.landing-home.landing-product .audience-card {
+  border-color: color-mix(in srgb, var(--line) 86%, #8aa39a 14%);
+  box-shadow: 0 14px 28px rgba(14, 28, 20, 0.08);
+}

@@ -35,6 +35,10 @@ const organizationUseCases = [
     body: 'Run chat, review rooms, admin tools, and internal control panels without handing message flow or service ownership to a central third party.',
   },
   {
+    title: 'SD-WAN and private branch connectivity',
+    body: 'VX6 can act as a decentralized overlay foundation for branch-to-branch internal service routing with policy/SLA and relay fallback evolution.',
+  },
+  {
     title: 'Distributed app stacks',
     body: 'A frontend, API, database, and worker nodes can all stay local to their own machines while VX6 turns them into one readable service network.',
   },

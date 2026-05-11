@@ -28,7 +28,7 @@ export default function DownloadPage() {
                       <tbody>
                         <tr>
                           <td>OS</td>
-                          <td>Linux and Windows</td>
+                          <td>Linux, Windows, and macOS build targets</td>
                         </tr>
                         <tr>
                           <td>Network</td>
@@ -61,7 +61,7 @@ export default function DownloadPage() {
                   <h2>Choose your branch</h2>
                   <ul>
                     <li><strong>main</strong>: Linux-first branch</li>
-                    <li><strong>Windows-compatible</strong>: Windows build branch with the same current VX6 protocol and feature behavior</li>
+                    <li><strong>Windows-compatible</strong>: Windows build branch with aligned protocol behavior</li>
                   </ul>
                 </section>
 
@@ -87,6 +87,17 @@ go build -o vx6-gui.exe ./cmd/vx6-gui`}</code>
                   <p>
                     Build Windows binaries from the <code>Windows-compatible</code> branch. That branch is
                     intended to stay aligned with the current VX6 protocol and feature set.
+                  </p>
+                </section>
+
+                <section>
+                  <h2>macOS build</h2>
+                  <pre className="code-block">
+                    <code>{`GOOS=darwin GOARCH=amd64 go build -o vx6-darwin ./cmd/vx6`}</code>
+                  </pre>
+                  <p>
+                    macOS build targets are validated as part of cross-platform release gating while Linux
+                    remains the source protocol branch.
                   </p>
                 </section>
 
@@ -153,10 +164,10 @@ systemctl --user reload vx6`}</code>
                 </section>
 
                 <section>
-                  <h2>Browser wrapper</h2>
+                  <h2>App layer status</h2>
                   <p>
-                    The current release already includes <code>vx6-gui</code> as a local web front-end.
-                    A broader browser-wrapper experience is coming soon.
+                    Protocol/runtime is production-focused. On top of it, VX6 MeshChat is under active
+                    development as a decentralized communication product for communities and teams.
                   </p>
                 </section>
               </div>
