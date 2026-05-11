@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
 :root {
   --bg: #f4f6f8;
@@ -405,7 +405,7 @@ code {
 }
 
 .download-page-content::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -35% -15% auto;
   height: 55%;
@@ -474,7 +474,11 @@ code {
   border-radius: 999px;
   font-weight: 600;
   text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .download-primary {
@@ -567,7 +571,7 @@ code {
 }
 
 .download-card::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -40% -10% auto;
   height: 60%;
@@ -2000,7 +2004,7 @@ table.spec td:first-child {
 }
 
 .quickstart-card h3 {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -2305,7 +2309,7 @@ table.spec td:first-child {
 
 .eyebrow {
   font-size: 11px;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: #3b7fff;
