@@ -27,9 +27,11 @@ function getCurrentTheme(): ThemeMode {
 }
 
 export default function LandingThemeToggle() {
+  const [mounted, setMounted] = useState(false);
   const [theme, setTheme] = useState<ThemeMode>('light');
 
   useEffect(() => {
+    setMounted(true);
     const initialTheme = resolveTheme();
     document.documentElement.setAttribute('data-theme', initialTheme);
     window.localStorage.setItem(THEME_STORAGE_KEY, initialTheme);
@@ -48,10 +50,10 @@ export default function LandingThemeToggle() {
       type="button"
       className="theme-toggle-btn"
       onClick={handleToggle}
-      aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-      title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-label={!mounted ? 'Toggle theme' : (theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode')}
+      title={!mounted ? 'Toggle theme' : (theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode')}
     >
-      {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+      {!mounted ? '...' : (theme === 'dark' ? 'Light mode' : 'Dark mode')}
     </button>
   );
 }
