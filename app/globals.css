@@ -1876,13 +1876,13 @@ table.spec td:first-child {
 .section-title {
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: #e8eaf0;
+  color: var(--text);
   margin-bottom: 12px;
 }
 
 .section-lead {
   font-size: 16px;
-  color: #8b90a0;
+  color: var(--text-soft);
   max-width: 600px;
   line-height: 1.7;
   margin-bottom: 48px;
