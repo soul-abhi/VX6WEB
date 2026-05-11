@@ -19,14 +19,15 @@ type NavKey =
 type PageShellProps = {
   currentPage: NavKey;
   children: ReactNode;
+  showFooter?: boolean;
 };
 
-export default function PageShell({ currentPage, children }: PageShellProps) {
+export default function PageShell({ currentPage, children, showFooter = true }: PageShellProps) {
   return (
     <>
       <SiteHeader currentPage={currentPage} />
       {children}
-      <SiteFooter />
+      {showFooter ? <SiteFooter /> : null}
     </>
   );
 }
