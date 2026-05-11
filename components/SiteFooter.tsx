@@ -6,11 +6,21 @@ export default function SiteFooter() {
       <div className="wrapper">
         <div className="footer-inner">
           <div className="footer-credit">
-            <p>VX6 is an IPv6-first peer-to-peer service network for localhost sharing, private routing, and direct service access.</p>
+            <p>
+              VX6 is a decentralized service and communication fabric for localhost-native products,
+              internal service meshes, and enterprise-grade private networking.
+            </p>
+            <p>
+              For corporate or business deployment support, contact the maintainer directly. To support
+              the mission of reducing centralized cloud hosting cost, consider sponsoring the project.
+            </p>
             <div className="footer-contact-stack" aria-label="Project contact links">
               <a href="mailto:suryanshdeshwal@gmail.com">suryanshdeshwal@gmail.com</a>
               <a href="https://github.com/ethical-buddy" target="_blank" rel="noopener noreferrer">
                 github.com/ethical-buddy
+              </a>
+              <a href="https://github.com/sponsors/ethical-buddy" target="_blank" rel="noopener noreferrer">
+                Donate / Sponsor VX6
               </a>
             </div>
           </div>

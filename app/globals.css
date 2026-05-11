@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
 :root {
+  color-scheme: light;
   --bg: #f4f6f8;
   --bg-elevated: #ffffff;
   --bg-soft: #eef2f5;
@@ -25,6 +26,9 @@
     sans-serif;
   --shadow: 0 12px 28px rgba(11, 23, 37, 0.06);
   --diagram-line: #304455;
+  --section-rule: rgba(17, 33, 49, 0.12);
+  --brand-emphasis: #1b4f91;
+  --hero-sheen: radial-gradient(1000px 360px at 90% -10%, rgba(27, 79, 145, 0.08), transparent 64%);
 }
 
 html[data-theme="dark"] {
@@ -46,6 +50,9 @@ html[data-theme="dark"] {
   --success-soft: #18281f;
   --shadow: 0 20px 38px rgba(0, 0, 0, 0.28);
   --diagram-line: #bbcad8;
+  --section-rule: rgba(217, 228, 238, 0.12);
+  --brand-emphasis: #8ab8ff;
+  --hero-sheen: radial-gradient(1000px 360px at 90% -10%, rgba(138, 184, 255, 0.16), transparent 64%);
 }
 
 *,
@@ -60,7 +67,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: var(--hero-sheen), var(--bg);
   color: var(--text);
   font-family: var(--sans);
   line-height: 1.72;
@@ -309,7 +316,8 @@ code {
     background-color 0.18s ease,
     border-color 0.18s ease,
     color 0.18s ease,
-    transform 0.18s ease;
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
 .sponsor-nav-button {
@@ -345,6 +353,15 @@ code {
   border-color: var(--text);
   text-decoration: none;
   transform: translateY(-1px);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--text) 12%, transparent);
+}
+
+.theme-toggle-icon {
+  flex-shrink: 0;
+}
+
+.theme-toggle-label {
+  margin-left: 0.5rem;
 }
 
 .sponsor-nav-button,
@@ -1936,7 +1953,7 @@ table.spec td:first-child {
   background: transparent;
   border: none;
   border-radius: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
   padding: 28px 0;
   box-shadow: none;
 }
@@ -1947,7 +1964,7 @@ table.spec td:first-child {
 }
 
 .feature-card:hover {
-  border-color: rgba(255, 255, 255, 0.06);
+  border-color: var(--section-rule);
   background: transparent;
 }
 
@@ -1959,7 +1976,7 @@ table.spec td:first-child {
 }
 
 .feature-grid .feature-card {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
   padding: 24px 0;
 }
 
@@ -1980,7 +1997,7 @@ table.spec td:first-child {
   background: transparent;
   border: none;
   border-radius: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
   padding: 20px 0;
   box-shadow: none;
 }
@@ -1991,14 +2008,14 @@ table.spec td:first-child {
   gap: 0;
   column-gap: 48px;
   margin-top: 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
 }
 
 .quickstart-card {
   background: transparent;
   border: none;
   border-radius: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
   padding: 28px 0;
   box-shadow: none;
 }
@@ -2008,7 +2025,7 @@ table.spec td:first-child {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #3b7fff;
+  color: var(--brand-emphasis);
   margin-bottom: 16px;
 }
 
@@ -2017,7 +2034,7 @@ table.spec td:first-child {
   grid-template-columns: 1fr 1fr;
   gap: 0;
   column-gap: 64px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
 }
 
 @media (max-width: 768px) {
@@ -2030,14 +2047,14 @@ table.spec td:first-child {
   background: transparent;
   border: none;
   border-radius: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
   padding: 24px 0 24px 20px;
   border-left: 2px solid transparent;
   box-shadow: none;
 }
 
 .audience-card:hover {
-  border-left-color: #3b7fff;
+  border-left-color: var(--brand-emphasis);
   background: transparent;
 }
 
@@ -2061,8 +2078,8 @@ table.spec td:first-child {
   gap: 0;
   column-gap: 64px;
   padding: 40px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
+  border-bottom: 1px solid var(--section-rule);
   margin-bottom: 48px;
 }
 
@@ -2084,15 +2101,15 @@ table.spec td:first-child {
   background: transparent;
   border: none;
   border-radius: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
   padding: 28px 0;
   box-shadow: none;
   overflow: visible;
 }
 
 .maintainer-connect-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: color-mix(in srgb, var(--bg-elevated) 86%, var(--bg-soft) 14%);
+  border: 1px solid var(--section-rule);
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 16px;
@@ -2102,7 +2119,7 @@ table.spec td:first-child {
   background: transparent;
   border: none;
   border-radius: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
   padding: 64px 0;
   box-shadow: none;
 }
@@ -2112,8 +2129,8 @@ table.spec td:first-child {
 }
 
 .page-side-box.toc {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: color-mix(in srgb, var(--bg-elevated) 86%, var(--bg-soft) 14%);
+  border: 1px solid var(--section-rule);
   border-radius: 8px;
   padding: 18px 20px;
 }
@@ -2122,7 +2139,7 @@ table.spec td:first-child {
   background: transparent;
   border: none;
   border-radius: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
   padding: 18px 0;
 }
 
@@ -2139,7 +2156,7 @@ table.spec td:first-child {
   gap: 80px;
   align-items: start;
   padding: 48px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
 }
 
 @media (max-width: 1024px) {
@@ -2153,7 +2170,7 @@ table.spec td:first-child {
   display: flex;
   gap: 20px;
   padding: 24px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
   border-radius: 0;
   background: transparent;
 }
@@ -2164,13 +2181,13 @@ table.spec td:first-child {
   justify-content: space-between;
   margin-bottom: 20px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--section-rule);
   background: transparent;
 }
 
 .rail-item {
   padding: 14px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-top: 1px solid var(--section-rule);
   background: transparent;
 }
 
@@ -2184,7 +2201,7 @@ table.spec td:first-child {
   gap: 64px;
   align-items: center;
   padding: 48px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
 }
 
 @media (max-width: 1024px) {
@@ -2196,27 +2213,27 @@ table.spec td:first-child {
 
 .home-section {
   padding: 88px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
 }
 
 .compare-section {
   padding: 88px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
 }
 
 .audience-section {
   padding: 88px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
 }
 
 .download-section {
   padding: 88px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
 }
 
 .community-section {
   padding: 88px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
 }
 
 .download-inner {
@@ -2252,11 +2269,11 @@ table.spec td:first-child {
 .comparison-points li {
   background: transparent;
   border: none;
-  border-left: 2px solid rgba(59, 127, 255, 0.4);
+  border-left: 2px solid color-mix(in srgb, var(--brand-emphasis) 48%, transparent);
   border-radius: 0;
   padding: 6px 0 6px 14px;
   font-size: 14px;
-  color: #8b90a0;
+  color: var(--text-soft);
 }
 
 .feature-card a {
@@ -2265,7 +2282,7 @@ table.spec td:first-child {
   gap: 4px;
   margin-top: 12px;
   font-size: 13px;
-  color: #3b7fff;
+  color: var(--brand-emphasis);
   text-decoration: none;
 }
 
@@ -2276,7 +2293,7 @@ table.spec td:first-child {
 .hero-localhost-diagram .diagram-shell {
   background: transparent;
   border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--section-rule);
   border-radius: 0;
   padding: 24px 0;
   margin-top: 40px;
@@ -2312,7 +2329,7 @@ table.spec td:first-child {
   font-family: "IBM Plex Mono", monospace;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #3b7fff;
+  color: var(--brand-emphasis);
   margin-bottom: 16px;
   display: block;
 }
@@ -2320,8 +2337,45 @@ table.spec td:first-child {
 .note {
   background: transparent;
   border: none;
-  border-left: 3px solid #3b7fff;
+  border-left: 3px solid var(--brand-emphasis);
   border-radius: 0;
   padding: 10px 0 10px 16px;
   margin: 20px 0;
+}
+
+/* Product-focused home theme override */
+.landing-home.landing-product {
+  --accent: #0f7b6c;
+  --accent-soft: #d8f0eb;
+  --bg: #f7f7f5;
+  --bg-elevated: #fffefb;
+  --bg-soft: #eef1ed;
+  --line: #d7ddd6;
+  --text: #16201a;
+  --text-soft: #34463e;
+}
+
+html[data-theme="dark"] .landing-home.landing-product {
+  --accent: #8ab8ff;
+  --accent-soft: #193250;
+  --bg: #0f141a;
+  --bg-elevated: #151d26;
+  --bg-soft: #1b2530;
+  --line: #334353;
+  --text: #eef3f7;
+  --text-soft: #d5dde7;
+}
+
+.landing-home.landing-product .home-hero {
+  background:
+    radial-gradient(circle at 8% 22%, rgba(18, 122, 106, 0.09), transparent 36%),
+    radial-gradient(circle at 92% 80%, rgba(194, 155, 64, 0.12), transparent 40%);
+}
+
+.landing-home.landing-product .feature-card,
+.landing-home.landing-product .home-rail-card,
+.landing-home.landing-product .quickstart-card,
+.landing-home.landing-product .audience-card {
+  border-color: color-mix(in srgb, var(--line) 86%, #8aa39a 14%);
+  box-shadow: 0 14px 28px rgba(14, 28, 20, 0.08);
 }
