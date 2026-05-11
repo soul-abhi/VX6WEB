@@ -134,32 +134,34 @@ alice uses it: ssh -p 2222 user@127.0.0.1`}</code>
 
                 <section id="why">
                   <h2>Why people actually use this</h2>
-                  <table className="wikitable">
-                    <thead>
-                      <tr>
-                        <th>Problem</th>
-                        <th>VX6 answer</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Too many services on localhost</td>
-                        <td>Publish them by name and connect from another local port.</td>
-                      </tr>
-                      <tr>
-                        <td>Need direct access between real peers</td>
-                        <td>Use IPv6 directly when peers already know each other.</td>
-                      </tr>
-                      <tr>
-                        <td>Need private routing</td>
-                        <td>Use relay paths or hidden aliases instead of normal public endpoints.</td>
-                      </tr>
-                      <tr>
-                        <td>Need a network without one fixed center</td>
-                        <td>Enter from any live peer and keep learning the mesh through other peers.</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div className="table-scroll">
+                    <table className="wikitable">
+                      <thead>
+                        <tr>
+                          <th>Problem</th>
+                          <th>VX6 answer</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Too many services on localhost</td>
+                          <td>Publish them by name and connect from another local port.</td>
+                        </tr>
+                        <tr>
+                          <td>Need direct access between real peers</td>
+                          <td>Use IPv6 directly when peers already know each other.</td>
+                        </tr>
+                        <tr>
+                          <td>Need private routing</td>
+                          <td>Use relay paths or hidden aliases instead of normal public endpoints.</td>
+                        </tr>
+                        <tr>
+                          <td>Need a network without one fixed center</td>
+                          <td>Enter from any live peer and keep learning the mesh through other peers.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
 
                   <p>
                     The result is simple to explain: localhost stays local, services stay named, and
