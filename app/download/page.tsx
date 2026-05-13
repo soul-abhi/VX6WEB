@@ -276,34 +276,95 @@ export default function DownloadPage() {
         <section className="dl-quickstart">
           <div className="wrapper">
             <div className="dl-qs-header">
-              <h2>Quick Start</h2>
-              <p>Get your node running in under 2 minutes</p>
+              <h2>Install &amp; Setup</h2>
+              <p>Build and run VX6</p>
             </div>
             <div className="dl-qs-steps">
               <div className="dl-qs-step">
                 <div className="dl-qs-num">1</div>
                 <div className="dl-qs-body">
-                  <h3>Clone &amp; Build</h3>
-                  <pre className="dl-code"><code>{`git clone https://github.com/ethical-buddy/VX6
-cd VX6 && sudo make install`}</code></pre>
+                  <h3>Choose your branch</h3>
+                  <ul className="dl-info-list">
+                    <li><strong>main</strong>: Linux-first branch</li>
+                    <li><strong>Windows-compatible</strong>: Windows build branch with aligned protocol behavior</li>
+                  </ul>
                 </div>
               </div>
               <div className="dl-qs-step">
                 <div className="dl-qs-num">2</div>
                 <div className="dl-qs-body">
-                  <h3>Initialize Node</h3>
-                  <pre className="dl-code"><code>{`vx6 init --name alice \\
-  --listen '[::]:4242' \\
-  --advertise '[your-ipv6]:4242' \\
-  --bootstrap '[entry-node]:4242'`}</code></pre>
+                  <h3>Clone and install</h3>
+                  <pre className="dl-code"><code>{`git clone https://github.com/ethical-buddy/VX6
+cd VX6
+sudo make install`}</code></pre>
+                  <p className="dl-info-text">
+                    make install builds the binary and installs the user systemd unit so the node can be started cleanly in the background.
+                  </p>
                 </div>
               </div>
               <div className="dl-qs-step">
                 <div className="dl-qs-num">3</div>
                 <div className="dl-qs-body">
-                  <h3>Start &amp; Connect</h3>
-                  <pre className="dl-code"><code>{`systemctl --user enable --now vx6
-vx6 status`}</code></pre>
+                  <h3>Windows build</h3>
+                  <pre className="dl-code"><code>{`go build -o vx6.exe ./cmd/vx6
+go build -o vx6-gui.exe ./cmd/vx6-gui`}</code></pre>
+                  <p className="dl-info-text">
+                    Build Windows binaries from the Windows-compatible branch. That branch is intended to stay aligned with the current VX6 protocol and feature set.
+                  </p>
+                </div>
+              </div>
+              <div className="dl-qs-step">
+                <div className="dl-qs-num">4</div>
+                <div className="dl-qs-body">
+                  <h3>macOS build</h3>
+                  <pre className="dl-code"><code>{`GOOS=darwin GOARCH=amd64 go build -o vx6-darwin ./cmd/vx6`}</code></pre>
+                  <p className="dl-info-text">
+                    macOS build targets are validated as part of cross-platform release gating while Linux remains the source protocol branch.
+                  </p>
+                </div>
+              </div>
+              <div className="dl-qs-step">
+                <div className="dl-qs-num">5</div>
+                <div className="dl-qs-body">
+                  <h3>Initialize your node</h3>
+                  <pre className="dl-code"><code>{`./vx6 init \\
+  --name alice \\
+  --listen '[::]:4242' \\
+  --advertise '[2001:db8::10]:4242' \\
+  --bootstrap '[2001:db8::1]:4242'`}</code></pre>
+                  <p className="dl-info-text">
+                    The --bootstrap address is simply a known live VX6 peer. It can be a public entry node, a mirror, or another machine that already sees the network.
+                  </p>
+                </div>
+              </div>
+              <div className="dl-qs-step">
+                <div className="dl-qs-num">6</div>
+                <div className="dl-qs-body">
+                  <h3>Start the runtime</h3>
+                  <pre className="dl-code"><code>{`vx6 node
+# or run it as a service
+systemctl --user enable --now vx6`}</code></pre>
+                  <p className="dl-info-text"><strong>Run with systemd</strong></p>
+                  <pre className="dl-code dl-code--sm"><code>{`systemctl --user enable --now vx6
+systemctl --user status vx6
+systemctl --user reload vx6`}</code></pre>
+                  <p className="dl-info-text">
+                    This keeps the node in the background and makes reloads easy when services or config change.
+                  </p>
+                </div>
+              </div>
+              <div className="dl-qs-step">
+                <div className="dl-qs-num">7</div>
+                <div className="dl-qs-body">
+                  <h3>Join the global VX6 network</h3>
+                  <pre className="dl-code"><code>{`vx6 init \\
+  --name alice \\
+  --listen '[::]:4242' \\
+  --advertise '[your-ipv6]:4242' \\
+  --bootstrap '[YOUR_PUBLIC_VX6_NODE_1]:4242'`}</code></pre>
+                  <p className="dl-info-text">
+                    We are also building a global VX6 network. Join it through one of the public VX6 entry nodes. Keep this section updated with your current live node IPs and mirrors.
+                  </p>
                 </div>
               </div>
             </div>
@@ -352,27 +413,24 @@ go build -o vx6-gui.exe ./cmd/vx6-gui`}</code></pre>
           <div className="wrapper">
             <div className="dl-info-grid">
               <div className="dl-info-card">
-                <h3>What You Get</h3>
+                <h3>What You Get After Setup</h3>
                 <ul className="dl-info-list">
                   <li>A persistent node identity</li>
-                  <li>Local registry of peers, services, and aliases</li>
-                  <li>A service network that grows from any live node</li>
+                  <li>A local registry of peers, services, and aliases</li>
+                  <li>A service network that can grow from any known live node</li>
                   <li>Direct, relay, hidden, and raw IPv6 access modes</li>
-                  <li>Encrypted communication by default</li>
                 </ul>
               </div>
               <div className="dl-info-card">
                 <h3>Requirements</h3>
                 <ul className="dl-info-list">
-                  <li>IPv6 reachability</li>
-                  <li>Go toolchain (for building from source)</li>
-                  <li>Linux, Windows, or macOS</li>
-                  <li>~20MB disk space</li>
-                  <li>Minimal RAM footprint</li>
+                  <li><strong>OS</strong> — Linux, Windows, and macOS build targets</li>
+                  <li><strong>Network</strong> — IPv6 reachability</li>
+                  <li><strong>Build</strong> — Go toolchain or release binary</li>
                 </ul>
               </div>
               <div className="dl-info-card">
-                <h3>App Layer</h3>
+                <h3>App Layer Status</h3>
                 <p className="dl-info-text">
                   Protocol and runtime are production-focused. On top of it, <strong>VX6 MeshChat</strong> is under active development as a decentralized communication product for communities and teams.
                 </p>
