@@ -234,15 +234,17 @@ target node forwards traffic to the real localhost target`}</code>
                 </section>
 
                 <section id="platforms">
-                  <h2>Linux and Windows support</h2>
+                  <h2>Platform support and app layers</h2>
                   <p>
-                    VX6 is currently maintained with Linux as the source-of-truth branch and a separate
-                    Windows-compatible branch for Windows builds. The protocol, DHT behavior, hidden
-                    services, and relay logic are intended to stay aligned between them.
+                    VX6 protocol/runtime is Linux-first with Windows-compatible coverage and macOS
+                    buildability targets. Application layers (desktop/mobile) are being built as separate
+                    products on top of the same core SDK and protocol contracts.
                   </p>
                   <ul>
                     <li>Linux is the main branch for protocol and release work.</li>
-                    <li>Windows support is available for current builds through the Windows-compatible branch.</li>
+                    <li>Windows support is available and kept behaviorally aligned.</li>
+                    <li>macOS support is part of current cross-platform roadmap.</li>
+                    <li>Desktop app track: VX6 MeshChat (calls/files/chat) on top of VX6 core.</li>
                     <li>Both are currently TCP-only.</li>
                     <li>Linux-only features such as systemd and eBPF management do not become native Windows features automatically.</li>
                   </ul>

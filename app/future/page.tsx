@@ -112,11 +112,10 @@ export default function FuturePage() {
                   </p>
                 </article>
                 <article className="feature-card">
-                  <h3>Browser wrapper</h3>
+                  <h3>VX6 MeshChat (active development)</h3>
                   <p>
-                    A broader browser-based wrapper is coming soon. The current release already includes
-                    <code> vx6-gui </code> as a local web front-end, and the next step is a cleaner wrapper
-                    experience for discovery, service access, hidden aliases, and peer-managed apps.
+                    A decentralized chat + file + call product built on VX6 with local data ownership,
+                    cross-platform desktop focus, and Android track planning.
                   </p>
                 </article>
               </div>
