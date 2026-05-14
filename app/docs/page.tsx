@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import PageShell from '@/components/PageShell';
 import { externalInterfaceSections } from '@/lib/docs-content';
 
@@ -18,6 +19,10 @@ export default function DocumentationPage() {
           <article className="article-shell">
             <p className="article-meta">Protocol and product docs</p>
             <h1>Documentation</h1>
+            <p className="section-lead">
+              Looking for app-development guidance? Start with the{' '}
+              <Link href="/sdk">SDK and App Builder Guide</Link>.
+            </p>
 
             <div className="doc-layout">
               <aside className="page-side">

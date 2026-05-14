@@ -43,6 +43,9 @@ export default function TechnicalPage() {
                     <li>
                       <a href="#platforms">Platforms</a>
                     </li>
+                    <li>
+                      <a href="#sdwan">SD-WAN direction</a>
+                    </li>
                   </ol>
                 </div>
 
@@ -91,6 +94,10 @@ export default function TechnicalPage() {
                         <tr>
                           <td>Discovery</td>
                           <td>peer sync plus DHT-backed lookups</td>
+                        </tr>
+                        <tr>
+                          <td>Transport</td>
+                          <td>TCP and QUIC modes via transport abstraction</td>
                         </tr>
                       </tbody>
                     </table>
@@ -214,6 +221,22 @@ target node forwards traffic to the real localhost target`}</code>
                       </div>
                     </li>
                   </ol>
+
+                  <h3>Why this is stronger for private service hosting</h3>
+                  <ul>
+                    <li>Owner application remains localhost-only; no direct public app port exposure.</li>
+                    <li>Descriptor validation requires signature, freshness, and multi-source agreement.</li>
+                    <li>Setup path and data path are separated, reducing simple tracing opportunities.</li>
+                    <li>Dual-leg rendezvous means both sides build independently toward the same meeting point.</li>
+                    <li>Hidden control flow includes anti-replay protections for setup signaling.</li>
+                  </ul>
+
+                  <h3>Benchmark reporting approach (without hardcoded numbers)</h3>
+                  <p>
+                    VX6 benchmark reports are presented by method categories instead of marketing claims:
+                    descriptor resolve latency, rendezvous setup time, data throughput, and churn recovery
+                    success under relay/node changes.
+                  </p>
                 </section>
 
                 <section id="ebpf">
@@ -243,10 +266,26 @@ target node forwards traffic to the real localhost target`}</code>
                   <ul>
                     <li>Linux is the main branch for protocol and release work.</li>
                     <li>Windows support is available and kept behaviorally aligned.</li>
-                    <li>macOS support is part of current cross-platform roadmap.</li>
+                    <li>macOS builds are supported for CLI and app tracks.</li>
                     <li>Desktop app track: VX6 MeshChat (calls/files/chat) on top of VX6 core.</li>
-                    <li>Both are currently TCP-only.</li>
+                    <li>Transport layer supports TCP and QUIC.</li>
+                    <li>Android and iOS app tracks are in active integration planning.</li>
                     <li>Linux-only features such as systemd and eBPF management do not become native Windows features automatically.</li>
+                  </ul>
+                </section>
+
+                <section id="sdwan">
+                  <h2>How VX6 can evolve into SD-WAN style deployments</h2>
+                  <p>
+                    VX6 already has identity-based peers, decentralized discovery, relay fallback, and
+                    localhost service routing. For SD-WAN style use, the next layer is policy and
+                    operations: route preferences, branch failover rules, and richer observability.
+                  </p>
+                  <ul>
+                    <li>Keep branch apps local while sharing by name over VX6 overlay.</li>
+                    <li>Select direct vs relay paths based on policy and health.</li>
+                    <li>Add operator controls for SLA thresholds and route enforcement.</li>
+                    <li>Use common backend contracts so desktop/mobile admin tools stay aligned.</li>
                   </ul>
                 </section>
               </div>

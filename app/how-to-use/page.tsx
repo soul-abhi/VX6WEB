@@ -4,7 +4,7 @@ import PageShell from '@/components/PageShell';
 export const metadata: Metadata = {
   title: 'How to use',
   description:
-    'Step-by-step VX6 guide covering node setup, service publishing, file transfer, hidden aliases, direct IPv6 access, and systemd usage.',
+    'Step-by-step VX6 guide covering node setup, localhost service sharing, file transfer, hidden aliases, direct IPv6 access, and backend API usage for app teams.',
   alternates: {
     canonical: '/how-to-use',
   },
@@ -35,6 +35,9 @@ export default function HowToUsePage() {
                     </li>
                     <li>
                       <a href="#hidden">Use hidden aliases</a>
+                    </li>
+                    <li>
+                      <a href="#sdk">Build apps with VX6 backend</a>
                     </li>
                     <li>
                       <a href="#background">Run in the background</a>
@@ -79,10 +82,10 @@ export default function HowToUsePage() {
   --name alice \\
   --listen '[::]:4242' \\
   --advertise '[2001:db8::10]:4242' \\
-  --bootstrap '[2001:db8::1]:4242'`}</code>
+  --peer '[2001:db8::1]:4242'`}</code>
                         </pre>
                         <p>
-                          The bootstrap can be any known live VX6 node. It is just the first contact,
+                          The first peer can be any known live VX6 node. It is only an entry contact,
                           not a permanent central controller.
                         </p>
                       </div>
@@ -100,6 +103,11 @@ export default function HowToUsePage() {
 
                 <section id="services">
                   <h2>3. Publish and connect services</h2>
+                  <p>
+                    Core idea: host keeps the real app local, client gets a local port too.
+                    Example: host runs service on <code>127.0.0.1:2000</code>, client uses
+                    <code>127.0.0.1:1000</code> after connect.
+                  </p>
                   <h3>Share SSH</h3>
                   <pre className="code-block">
                     <code>{`./vx6 service add --name ssh --target 127.0.0.1:22
@@ -154,8 +162,28 @@ curl http://127.0.0.1:9000`}</code>
                   </p>
                 </section>
 
+                <section id="sdk">
+                  <h2>5. Build apps with VX6 backend</h2>
+                  <p>
+                    UI teams should use the shared local backend API (`vx6d`) instead of hardcoding CLI
+                    flags in every frontend.
+                  </p>
+                  <pre className="code-block">
+                    <code>{`# start shared backend
+go build -o vx6d ./apps/vx6backend/cmd/vx6d
+./vx6d --listen 127.0.0.1:4866
+
+# health check
+curl -fsS http://127.0.0.1:4866/health`}</code>
+                  </pre>
+                  <p>
+                    Platform folders for contributors are under <code>apps/vx6backend/clients</code>:
+                    Tauri, Android, iOS, and Web.
+                  </p>
+                </section>
+
                 <section id="background">
-                  <h2>5. Run it in the background</h2>
+                  <h2>6. Run it in the background</h2>
                   <pre className="code-block">
                     <code>{`systemctl --user enable --now vx6
 systemctl --user status vx6

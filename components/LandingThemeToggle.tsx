@@ -53,13 +53,7 @@ export default function LandingThemeToggle() {
     }
   };
 
-  if (!mounted) {
-    return (
-      <button type="button" className="theme-toggle-btn" disabled>
-        <span className="theme-toggle-label">...</span>
-      </button>
-    );
-  }
+  if (!mounted) return null;
 
   return (
     <button

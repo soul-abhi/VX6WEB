@@ -13,6 +13,7 @@ type NavKey =
   | 'sponsor'
   | 'future'
   | 'docs'
+  | 'sdk'
   | 'contributing'
   | 'code-of-conduct';
 

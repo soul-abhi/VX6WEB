@@ -24,7 +24,7 @@ export default function FuturePage() {
                 <tbody>
                   <tr>
                     <td>
-                      <span className="stat-val">IPv6-first</span>
+                      <span className="stat-val">IPv6-first + peer mesh</span>
                       <span className="stat-desc">Core transport model</span>
                     </td>
                     <td>
@@ -36,8 +36,8 @@ export default function FuturePage() {
                       <span className="stat-desc">Private routing mode</span>
                     </td>
                     <td>
-                      <span className="stat-val">systemd</span>
-                      <span className="stat-desc">Background operation</span>
+                      <span className="stat-val">TCP + QUIC</span>
+                      <span className="stat-desc">Transport modes</span>
                     </td>
                   </tr>
                 </tbody>
@@ -64,14 +64,14 @@ export default function FuturePage() {
                 </div>
               </div>
 
-              <div className="roadmap-item">
+                <div className="roadmap-item">
                 <div className="roadmap-phase">Phase 2</div>
                 <div className="roadmap-body">
                   <span className="status-badge active">Growing</span>
                   <h3>Builder and SDK direction</h3>
                   <p>
-                    VX6 is becoming a base layer for apps that want peer-first reachability, service
-                    naming, hidden access, and local-worker architectures.
+                    VX6 now includes a shared backend contract (`vx6d`) so platform teams can build
+                    Tauri, Android, iOS, and Web UIs over one stable runtime API.
                   </p>
                 </div>
               </div>
@@ -80,10 +80,10 @@ export default function FuturePage() {
                 <div className="roadmap-phase">Phase 3</div>
                 <div className="roadmap-body">
                   <span className="status-badge">Planned</span>
-                  <h3>Broader ecosystem</h3>
+                  <h3>Enterprise and SD-WAN layer</h3>
                   <p>
-                    More reference applications, public builders, deployment patterns, and region-aware
-                    network examples can grow on top of the current runtime.
+                    Policy routing, observability, branch failover controls, and deployment automation
+                    are the main roadmap areas for enterprise-grade VX6 overlays.
                   </p>
                 </div>
               </div>
@@ -112,10 +112,10 @@ export default function FuturePage() {
                   </p>
                 </article>
                 <article className="feature-card">
-                  <h3>VX6 MeshChat (active development)</h3>
+                  <h3>VX6 Comms app (active development)</h3>
                   <p>
                     A decentralized chat + file + call product built on VX6 with local data ownership,
-                    cross-platform desktop focus, and Android track planning.
+                    desktop progress and active Android/iOS integration direction.
                   </p>
                 </article>
               </div>

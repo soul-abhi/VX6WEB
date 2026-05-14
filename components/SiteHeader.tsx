@@ -15,6 +15,7 @@ type NavKey =
   | 'sponsor'
   | 'future'
   | 'docs'
+  | 'sdk'
   | 'contributing'
   | 'code-of-conduct';
 
@@ -77,9 +78,12 @@ export default function SiteHeader({ currentPage }: SiteHeaderProps) {
         </nav>
         <div className="hero-nav-toggle">
           <div className="nav-meta-links" aria-label="Project resources">
-            {/* <Link href="/docs" className={currentPage === 'docs' ? 'active' : ''}>
+            <Link href="/docs" className={currentPage === 'docs' ? 'active' : ''}>
               Docs
-            </Link> */}
+            </Link>
+            <Link href="/sdk" className={currentPage === 'sdk' ? 'active' : ''}>
+              SDK
+            </Link>
             <Link
               href="/contributing"
               className={currentPage === 'contributing' ? 'active' : ''}

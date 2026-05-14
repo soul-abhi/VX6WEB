@@ -17,6 +17,12 @@ const sponsorCompanies = [
     email: 'connect@hackitiselabs.in',
     body: 'HACKITISE LAB Pvt. Ltd. is sponsoring VX6 and supporting secure engineering, product delivery, and infrastructure collaboration for the project.',
   },
+  {
+    name: 'Dailker',
+    website: 'https://github.com/dailker',
+    email: 'N/A',
+    body: 'Dailker is listed as an individual sponsor supporting VX6 open development and ecosystem growth.',
+  },
 ];
 
 export default function SponsorPage() {
@@ -109,7 +115,11 @@ export default function SponsorPage() {
                           <a href={company.website} target="_blank" rel="noopener noreferrer">
                             {company.website}
                           </a>
-                          <a href={`mailto:${company.email}`}>{company.email}</a>
+                          {company.email !== 'N/A' ? (
+                            <a href={`mailto:${company.email}`}>{company.email}</a>
+                          ) : (
+                            <span>{company.email}</span>
+                          )}
                         </div>
                       </div>
                     </article>

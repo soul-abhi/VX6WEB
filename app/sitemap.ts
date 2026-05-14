@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sponsor',
     '/future',
     '/docs',
+    '/sdk',
     '/code-of-conduct',
     '/contributing',
   ];
@@ -33,6 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/download': { changeFrequency: 'weekly', priority: 0.9 },
     '/how-to-use': { changeFrequency: 'monthly', priority: 0.9 },
     '/docs': { changeFrequency: 'weekly', priority: 0.85 },
+    '/sdk': { changeFrequency: 'weekly', priority: 0.9 },
     '/technical': { changeFrequency: 'monthly', priority: 0.85 },
   };
 

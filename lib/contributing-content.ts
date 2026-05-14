@@ -5,35 +5,35 @@ export type ContributionStep = {
 
 export const contributionSteps: ContributionStep[] = [
   {
-    title: 'Fork and clone the repository',
-    body: 'Create a feature branch from the main branch and keep it focused on one change set.',
+    title: 'Choose your contribution lane',
+    body: 'Backend contributors should work in apps/vx6backend. UI contributors should work in platform folders (tauri/android/ios/web) and consume the shared backend contract.',
   },
   {
-    title: 'Install dependencies and run checks',
-    body: 'Use the project scripts to validate linting and builds before opening a PR.',
+    title: 'Fork and create a focused branch',
+    body: 'Create a feature branch from main and keep each PR focused on one backend or one platform UI concern.',
   },
   {
-    title: 'Make changes in small commits',
-    body: 'Keep changes scoped and documented so reviewers can follow the intent.',
+    title: 'Use backend-first integration',
+    body: 'Connect UI actions to vx6d API endpoints first, then add presentation and interaction improvements on top.',
   },
   {
-    title: 'Open a pull request',
-    body: 'Describe the change, link any related issues, and note any follow-up work.',
+    title: 'Verify and open a PR',
+    body: 'Share build/test results, describe touched endpoints or pages, and include screenshots for UI changes.',
   },
 ];
 
 export const codingStandards: string[] = [
-  'Use clear, readable naming and avoid single-letter identifiers unless required by scope.',
-  'Prefer small, reusable components and keep data in clearly named arrays or helpers.',
-  'Keep styling adjustments minimal and consistent with existing theme variables.',
-  'Document non-obvious behavior with short, focused comments.',
+  'Keep backend contract changes explicit in API docs so all platform teams can follow them.',
+  'Use clear naming and avoid hidden behavior in transport, routing, or security-sensitive code.',
+  'For UI work, keep non-technical wording readable and avoid unexplained networking jargon.',
+  'Update diagrams when architecture behavior changes (DHT, hidden, relay, transports, SDK flow).',
 ];
 
 export const prProcess: string[] = [
-  'Summarize the goal of the change in the PR description.',
-  'List any new pages, components, or assets that were added.',
-  'Call out UI changes and include screenshots when applicable.',
-  'Confirm builds and lint checks pass before requesting review.',
+  'Summarize backend, protocol, or UI scope clearly in the PR description.',
+  'State whether change affects Linux/Windows/macOS and any Android/iOS integration assumptions.',
+  'Include endpoint changes, command examples, and screenshots for UI updates.',
+  'Confirm project build and relevant tests pass before requesting review.',
 ];
 
 export const issueReportTemplate: string[] = [

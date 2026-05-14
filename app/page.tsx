@@ -12,31 +12,31 @@ export const metadata: Metadata = {
 
 const products = [
   {
-    title: 'Decentralized Internal Services',
-    body: 'Run internal tools, admin portals, and APIs without central ingress bottlenecks.',
+    title: 'Localhost Service Sharing',
+    body: 'Keep apps private on localhost (example: 127.0.0.1:2000) and open them as another local port on a remote peer (example: 127.0.0.1:1000).',
   },
   {
-    title: 'SD-WAN Overlay Foundations',
-    body: 'Identity-based peer routing with relay fallback and policy-driven path selection.',
+    title: 'Enterprise Overlay / SD-WAN Direction',
+    body: 'Use VX6 identities, DHT discovery, and relay fallback to connect branches and remote teams with less manual network setup.',
   },
   {
-    title: 'VX6 MeshChat (In Progress)',
-    body: 'Peer-first chat, file sharing, and call transport with local data ownership.',
+    title: 'VX6 Comms + Browser Layer',
+    body: 'Build decentralized chat/file/call apps and browser-style local control surfaces on top of the same VX6 core backend.',
   },
 ];
 
 const benefits = [
-  'No fixed central controller required for day-to-day peer reachability.',
-  'Localhost-first service model keeps real app surfaces private.',
-  'Faster branch/peer onboarding through identity and service naming.',
-  'Cost reduction potential by reducing centralized cloud/network dependency.',
+  'Your real service stays on localhost, not exposed as a public internet port.',
+  'People connect to service names and identities, not fragile static IP mappings.',
+  'DHT + peer registry gives decentralized discovery without a central app gateway.',
+  'Can reduce dependence on always-on central ingress and expensive middleboxes.',
 ];
 
 const currentWork = [
-  'Cross-platform desktop messaging and calls via VX6 MeshChat',
-  'Adaptive media transport, TURN hardening, and device diagnostics',
-  'Stable-release branch policy, conformance vectors, and fuzz testing',
-  'Android and Tauri frontend tracks over the same core SDK',
+  'VX6 Comms app hardening (desktop now, Android/iOS active development)',
+  'Shared backend contract (`vx6d`) so every platform UI can plug into one runtime',
+  'SD-WAN architecture track: policy routing, observability, and branch failover',
+  'Cross-platform packaging and operator-grade deployment docs',
 ];
 
 export default function HomePage() {
@@ -65,8 +65,9 @@ export default function HomePage() {
             <p className="article-meta">Decentralized Network Runtime</p>
             <h1 id="hero-title">Build private internet-scale systems without central lock-in.</h1>
             <p className="hero-subtitle">
-              VX6 turns localhost-native services into globally reachable, policy-controlled, peer-driven
-              products for teams, enterprises, and communities.
+              VX6 lets you keep services private on localhost and still share them across peers by name.
+              Example: one machine hosts on localhost:2000, another machine uses localhost:1000 to access
+              it through VX6. Users work with local ports, not raw public IP exposure.
             </p>
             <div className="hero-cta-row">
               <Link href="/download" className="hero-cta hero-cta-primary">Get VX6</Link>
@@ -79,10 +80,10 @@ export default function HomePage() {
           <div className="home-rail-card">
             <h3>Where VX6 works today</h3>
             <ul>
-              <li>Linux CLI runtime and service mesh workflows</li>
-              <li>Windows-compatible build path with aligned protocol behavior</li>
-              <li>Desktop app layer: VX6 MeshChat under active implementation</li>
-              <li>Website/docs and SDK tracks for app builders</li>
+              <li>Linux CLI/runtime with service sharing, DHT, hidden services, relay paths</li>
+              <li>Windows and macOS build flows, plus ongoing iOS/Android app integration tracks</li>
+              <li>QUIC transport implemented alongside TCP transport selection</li>
+              <li>Desktop app layer and shared backend for cross-platform UI teams</li>
             </ul>
           </div>
         </div>
@@ -128,8 +129,8 @@ export default function HomePage() {
           <div className="home-rail-card contribution-card">
             <h2 id="mission-title" className="section-title">Mission: Reduce centralized cloud dependency</h2>
             <p className="section-lead">
-              VX6 aims to cut avoidable infrastructure cost and operational lock-in by making decentralized
-              service and communication products practical for real teams.
+              VX6 aims to make private service routing, decentralized communication, and branch networking
+              practical for real teams without forcing every workflow through centralized cloud gateways.
             </p>
             <div className="quick-link-row">
               <Link href="/sponsor" className="hero-cta hero-cta-primary">Donate / Sponsor</Link>
@@ -146,4 +147,3 @@ export default function HomePage() {
     </main>
   );
 }
-
