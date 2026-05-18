@@ -68,6 +68,8 @@ export default function HomePage() {
               VX6 lets you keep services private on localhost and still share them across peers by name.
               Example: one machine hosts on localhost:2000, another machine uses localhost:1000 to access
               it through VX6. Users work with local ports, not raw public IP exposure.
+              It also allows you to have complete decentralised and serverless architecture with no security/Downtime
+              issues with no geographical barriers.
             </p>
             <div className="hero-cta-row">
               <Link href="/download" className="hero-cta hero-cta-primary">Get VX6</Link>
