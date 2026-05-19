@@ -70,6 +70,10 @@ export default function HomePage() {
               it through VX6. Users work with local ports, not raw public IP exposure.
               It also allows you to have complete decentralised and serverless architecture with no security/Downtime
               issues with no geographical barriers.
+              No static IP
+              No Port forwarding
+              True peer2peer decentralised network (enable serverless applications)
+              Faster and more secure architecture for hosting 
             </p>
             <div className="hero-cta-row">
               <Link href="/download" className="hero-cta hero-cta-primary">Get VX6</Link>
