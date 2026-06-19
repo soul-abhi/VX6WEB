@@ -14,10 +14,7 @@ export default function SiteFooter() {
               For corporate or business deployment support, contact the maintainer directly. To support
               the mission of reducing centralized cloud hosting cost, consider sponsoring the project.
             </p>
-            <p>
-            This project is mainly sponsored and maintained by hackitiselabs.in
-            </p>
-            <div className="footer-contact-stack" aria-label="Project contact links">
+           <div className="footer-contact-stack" aria-label="Project contact links">
               <a href="mailto:suryanshdeshwal@gmail.com">suryanshdeshwal@gmail.com</a>
               <a href="mailto:suryanshdeshwal@gmail.com">suryansh.deshwal@hackitiselabs.in</a>
               <a href="https://github.com/ethical-buddy" target="_blank" rel="noopener noreferrer">
